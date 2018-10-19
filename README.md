@@ -50,30 +50,29 @@ Examples:
 * On OSX and Linux: `secure-tunnel -h`
 
 ```text
-  Usage: secure-tunnel [options] <local-URL->server-URL ...>
+Usage: secure-tunnel [options] <local-URL->server-URL ...>
 
-  Acrolinx Secure Tunnel
+Acrolinx Secure Tunnel
 
-  Options:
-
-    -V, --version                              output the version number
-    -v, --verbose                              show accessed URLs
-    -r, --requests                             show requests and responses
-    -s, --silent                               don't show info messages & status page
-    -p, --proxy <proxy server URL>             use the given proxy server
-    -S, --no-system_proxy                      don't use windows system proxy (default: true)
-    -E, --no-evnironment_proxy                 don't use env proxy server (default: true)
-    -a, --autorun                              add ourselves to autorun (windows only)
-    -C, --no-secure                            no certificate validation (default: true)
-    -k, --key <key.pem>                        private key file
-    -c, --cert <cert.pem>                      certificate file
-    -e, --passphrase <private key passphrase>  password for private key
-    -i, --info_url <url>                       the local URL that will show the Acrolinx Secure Tunnel status page
-    -o, --sso <username:generic token>         add single sign-on headers to all calls
-    -t, --store <certificate store file>       use a custom certificate store
-    -n, --token <authorization token>          add an authorization token to all requests
-    -h, --help                                 output usage information
-```
+Options:
+  -V, --version                              output the version number
+  -v, --verbose                              show accessed URLs
+  -r, --requests                             show requests and responses
+  -s, --silent                               don't show info messages & status page
+  -p, --proxy <proxy server URL>             use the given proxy server
+  -S, --no-system_proxy                      don't use windows system proxy
+  -E, --no-evnironment_proxy                 don't use env proxy server
+  -a, --autorun                              add current configuration to autorun (windows only)
+  -C, --no-secure                            no certificate validation
+  -k, --key <key.pem>                        private key file
+  -c, --cert <cert.pem>                      certificate file
+  -e, --passphrase <private key passphrase>  password for private key
+  -i, --info_url <local url>                 the local URL that will show the Acrolinx Secure Tunnel status page
+  -o, --sso <username:generic token>         add single sign-on headers to all calls
+  -t, --store <certificate store file>       use a custom certificate store
+  -n, --token <authorization token>          add an authorization token to all requests
+  -h, --help                                 output usage information
+  ```
 
 ### Warnings and Restrictions
 

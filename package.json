@@ -47,7 +47,7 @@
     "predebugWithParams": "npm run precompile",
     "debugWithParams": "node --nolazy --inspect=9230 --debug-brk dist/ts/secure-tunnel.js \"http://localhost:8031->http://test-ssl.acrolinx.com:8031\" -v -r -I",
     "doc": "node node_modules/markdown-to-html/bin/github-markdown README.md > README.html",
-    "setversion": "node node_modules/replace/bin/replace.js \"666123\" \"$BUILD_NUMBER\" src/acrolinx.cli.ts",
+    "setversion": "node node_modules/replace/bin/replace.js \"666123\" \"$BUILD_NUMBER\" src/ts/secure-tunnel.cli.ts",
     "prerelease": "npm run setversion && npm run compile",
     "release": "npm run doc",
     "pretest": "npm run build",

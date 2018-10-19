@@ -215,7 +215,7 @@ export class Cli implements Config {
   private defineProgramUsage() {
     let p = program
       .description("Acrolinx Secure Tunnel")
-      .version("0.0.666123")
+      .version("1.0.666123")
       .usage("[options] <local-URL->server-URL ...>")
       .option("-v, --verbose", "show accessed URLs")
       .option("-r, --requests", "show requests and responses")
@@ -223,7 +223,7 @@ export class Cli implements Config {
       .option("-p, --proxy <proxy server URL>", "use the given proxy server")
       .option("-S, --no-system_proxy", "don't use windows system proxy")
       .option("-E, --no-evnironment_proxy", "don't use env proxy server")
-      .option("-a, --autorun", "add command to autorun (windows only)")
+      .option("-a, --autorun", "add current configuration to autorun (windows only)")
       .option("-C, --no-secure", "no certificate validation")
       .option("-k, --key <key.pem>", "private key file")
       .option("-c, --cert <cert.pem>", "certificate file")
@@ -233,7 +233,7 @@ export class Cli implements Config {
       )
       .option(
         "-i, --info_url <local url>",
-        "the local URL that will show the secure-tunnel status page"
+        "the local URL that will show the Acrolinx Secure Tunnel status page"
       )
       .option(
         "-o, --sso <username:generic token>",
