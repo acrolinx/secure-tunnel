@@ -22,9 +22,7 @@ huge help if you're not familiar with those other tools. However,
 you may of course consider other solutions based on
 well-established, freely available programs.
 
-## Do You Want to Take the Secure Tunnel?
-
-Acrolinx Secure Tunnel targets several audiences:
+### Targets Audiences
 
 * System administrators who want to analyze problems that their users
   face when connecting to Acrolinx.
