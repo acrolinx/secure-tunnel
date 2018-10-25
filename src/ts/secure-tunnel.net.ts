@@ -41,6 +41,13 @@ export class SecureTunnel {
     this.config = config;
   }
 
+  private fixBadCookies(proxyRes: http.IncomingMessage) {
+    if (proxyRes.headers["set-cookie"]) {
+      const replaceStrangeChars = (text: string) => text.replace(/[\u0000-\u0031\u0127]/, "_");
+      proxyRes.headers["set-cookie"] = (proxyRes.headers["set-cookie"] as string[]).map(h => replaceStrangeChars(h));
+    }
+  }
+
   testUrl = (url: URL, sslConfig: SslConfig, proxyUri?: URL) => {
     return new Promise((resolve, reject) => {
       let label: string = hash(
@@ -247,6 +254,9 @@ export class SecureTunnel {
             JSON.stringify(req.headers)
           );
         }
+        p.on("proxyRes", (proxyRes, req, res) => {
+          this.fixBadCookies(proxyRes);
+        });
         p.web(
           req,
           res,
