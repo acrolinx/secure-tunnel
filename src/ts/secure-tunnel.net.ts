@@ -54,7 +54,7 @@ export class SecureTunnel {
         url.toString() + (proxyUri ? proxyUri.toString() : "")
       );
       let proxyAgent: any = proxyUri ? new ProxyAgent(proxyUri) : null;
-      if (!this.config.silent) {
+      if (this.config.verbose) {
         console.log(label, "Connecting: " + url.toString());
       }
 
@@ -76,7 +76,7 @@ export class SecureTunnel {
               ca: sslConfig.ca
             }),
             res => {
-              if (this.config.verbose) {
+              if (!this.config.silent) {
                 console.log(
                   label,
                   url.toString(),
@@ -98,7 +98,7 @@ export class SecureTunnel {
       }
       http
         .request(options, res => {
-          if (this.config.verbose) {
+          if (!this.config.silent) {
             console.log(label, url.toString(), res.statusCode, res.statusMessage);
           }
           resolve(true);
