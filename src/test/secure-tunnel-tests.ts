@@ -130,6 +130,35 @@ describe("http tunnel", () => {
         return true;
     });
 
+    it("to https post", async () => {
+        const localUrl = "http://localhost:" + randomPort();
+        t.tunnel!.startTunnel(new URL(localUrl), new URL("https://test-ssl.acrolinx.com"), { secure: true }, undefined, undefined, undefined);
+        const result = await fetch(localUrl + "/iq/services/v4/rest/core/requestSession", {
+            method: "post",
+            headers: { "Content-Type": "application/json", "authToken": "foo" },
+            body: JSON.stringify({
+                "sessionType": "CHECKING",
+                "clientSignature": "adb",
+                "clientInfo": {
+                    "name": "Acrolinx SAMPLE",
+                    "version": "0.1",
+                    "buildNumber": "1",
+                    "clientLoginName": "AUser",
+                    "clientHostname": "myHostName",
+                    "clientHostApplication": "MyHostApp"
+                }
+            })
+        });
+        expect(result.status).to.be.eq(403);
+        const json = await result.json();
+        expect(json).to.haveOwnProperty("message");
+        expect(json).to.haveOwnProperty("errors");
+        expect(json.errors).to.haveOwnProperty("exception_type");
+        expect(json.errors).to.haveOwnProperty("exception_message");
+
+        return true;
+    });
+
     afterEach(() => {
         if (t.tunnel) {
             t.tunnel.close();

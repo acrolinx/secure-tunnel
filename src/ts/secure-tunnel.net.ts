@@ -1,37 +1,19 @@
 /* Copyright (c) 2017-present Acrolinx GmbH */
 
-import { Tunnel, SsoConfig } from "./secure-tunnel.def";
+import { Tunnel, SsoConfig, SecureTunnelConfig, SslConfig } from "./secure-tunnel.def";
 import * as http from "http";
 import * as https from "https";
 import * as proxy from "http-proxy";
-import * as _ from "lodash";
 import { URL, Url } from "url";
+import { hash } from "./util";
 import { gunzip } from "zlib";
+import * as urlTester from "./url-tester";
+import * as infoServer from "./info-server";
 
 let fs = require("fs");
-let crypto = require("crypto");
 let ProxyAgent = require("proxy-agent");
 
-let hash = (text: string) =>
-  crypto
-    .createHash("md5")
-    .update(text)
-    .digest("hex")
-    .substring(0, 8);
-
-export interface SecureTunnelConfig {
-  silent: boolean;
-  verbose: boolean;
-  requests: boolean;
-}
-
-export interface SslConfig {
-  passphrase?: string;
-  key?: string;
-  cert?: string;
-  ca?: string[];
-  secure: boolean;
-}
+export { SecureTunnelConfig, SslConfig };
 
 export class SecureTunnel {
   private config: SecureTunnelConfig;
@@ -49,68 +31,8 @@ export class SecureTunnel {
   }
 
   testUrl = (url: URL, sslConfig: SslConfig, proxyUri?: URL) => {
-    return new Promise((resolve, reject) => {
-      let label: string = hash(
-        url.toString() + (proxyUri ? proxyUri.toString() : "")
-      );
-      let proxyAgent: any = proxyUri ? new ProxyAgent(proxyUri) : null;
-      if (this.config.verbose) {
-        console.log(label, "Connecting: " + url.toString());
-      }
-
-      let options: http.RequestOptions = {
-        agent: proxyAgent,
-        port: url.port,
-        hostname: url.hostname,
-        method: "GET",
-        path: url.pathname,
-        protocol: url.protocol,
-        host: url.host
-      };
-
-      if (url.protocol.startsWith("https")) {
-        https
-          .request(
-            _.assign(options, {
-              rejectUnauthorized: sslConfig.secure,
-              ca: sslConfig.ca
-            }),
-            res => {
-              if (!this.config.silent) {
-                console.log(
-                  label,
-                  url.toString(),
-                  res.statusCode,
-                  res.statusMessage
-                );
-              }
-              resolve(true);
-            }
-          )
-          .on("error", err => {
-            if (!this.config.silent) {
-              console.error(label, url.toString(), err);
-            }
-            reject();
-          })
-          .end();
-        return;
-      }
-      http
-        .request(options, res => {
-          if (!this.config.silent) {
-            console.log(label, url.toString(), res.statusCode, res.statusMessage);
-          }
-          resolve(true);
-        })
-        .on("error", err => {
-          if (!this.config.silent) {
-            console.error(label, url.toString(), err);
-          }
-          reject();
-        })
-        .end();
-    });
+    let label: string = hash(url, proxyUri);
+    return urlTester.testUrl(label, url, this.config, sslConfig, proxyUri);
   };
 
   close = () => {
@@ -122,45 +44,13 @@ export class SecureTunnel {
     }
   };
 
-  startInfoServer = (url: URL, proxyUri: Url | undefined, proxies: Tunnel[]) => {
-    let label: string = hash(url.toString());
+  startInfoServer = (url: URL, proxyUri: Url | undefined, tunnels: Tunnel[]) => {
+    let label: string = hash(url);
     console.log(label, "Starting Info", url.toString());
-    const x = http
-      .createServer((req, res) => {
-        res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-        res.end(
-          "<html><head><title>Acrolinx Secure Tunnel</title></head><body><h1>Acrolinx Secure Tunnel</h1><h2>Proxy</h2>" +
-          '<div><a href="' +
-          proxyUri +
-          '">' +
-          proxyUri +
-          "</a></div><h2>Tunnels</h2>" +
-          proxies
-            .map(
-              p =>
-                '<div><a href="' +
-                p.localUrl.toString() +
-                '">' +
-                p.localUrl.toString() +
-                '</a> -> <a href="' +
-                p.targetUrl.toString() +
-                '"</a>' +
-                p.targetUrl.toString() +
-                "</a></div>"
-            )
-            .join() +
-          "</body></html>"
-        );
-      })
-      .on("error", err => {
-        if (!this.config.silent) {
-          console.error(label, "info server", err);
-        }
-      });
 
-    this.servers.push(x);
-
-    x.listen({
+    const server = infoServer.create(label, proxyUri, tunnels, this.config.silent);
+    this.servers.push(server);
+    server.listen({
       host: url.hostname,
       port: url.port,
       protocol: url.protocol
@@ -175,13 +65,9 @@ export class SecureTunnel {
     token?: string,
     sso?: SsoConfig
   ) => {
-    let label: string = hash(
-      local.toString() +
-      target.toString() +
-      (proxyUri ? proxyUri.toString() : "")
-    );
+    let label: string = hash(local, target, proxyUri);
     try {
-      if (!this.config.silent) {
+      if (this.config.verbose) {
         console.log(
           label,
           "Starting Acrolinx Secure Tunnel",
@@ -192,35 +78,53 @@ export class SecureTunnel {
       }
       let p = proxy.createProxyServer();
 
-      let proxyAgent: any = proxyUri ? new ProxyAgent(proxyUri) : null;
+      p.on("proxyRes", (proxyRes, req, res) => {
+        this.fixBadCookies(proxyRes);
 
-      let proxyFunction = (
-        req: http.IncomingMessage,
-        res: http.ServerResponse
-      ) => {
-        if (this.config.requests) {
-          let w = res.write;
-          res.write = function () {
-            if (res.getHeader("content-encoding") === "gzip") {
-              gunzip(arguments[0], (err, result) => {
-                if (err) {
-                  console.log(label, "<-", "gunzip error", err);
-                  return;
-                }
-                console.log(label, "<-", "unzipped:", result.toString());
-              });
-            } else {
-              console.log(label, "<-", arguments[0].toString());
-            }
-            return w.apply(this, arguments);
-          };
-          let r = req.read;
-          req.read = function () {
-            console.log(label, "->", arguments[0].toString());
-            return r.apply(this, arguments);
-          };
+        if (this.config.verbose) {
+          console.log(
+            label,
+            "<--",
+            res.statusCode,
+            res.statusMessage,
+            JSON.stringify(res.getHeaders())
+          );
+          console.log(
+            label,
+            "-->",
+            req.method,
+            req.url,
+            JSON.stringify(req.headers)
+          );
         }
 
+        if (this.config.requests) {
+          const buffer: Uint8Array[] = [];
+          proxyRes.on("data", data => {
+            buffer.push(data);
+          });
+          proxyRes.on("end", () => {
+            const body = Buffer.concat(buffer);
+            if (body) {
+              if (res.getHeader("content-encoding") === "gzip") {
+                gunzip(body, (err, result) => {
+                  if (err) {
+                    console.log(label, "<--", "gunzip error", err);
+                    console.log(label, "<--", "body (zipped?):", body.toString());
+                    return;
+                  }
+                  console.log(label, "<--", "body unzipped:", result.toString());
+                });
+              }
+              else {
+                console.log(label, "<--", "body:", body.toString());
+              }
+            }
+          });
+        }
+      });
+
+      p.on("proxyReq", (proxyReq, req, res) => {
         req.headers.host = target.host;
         if (!req.headers["x-acrolinx-base-url"]) {
           req.headers["X-Acrolinx-Base-URL"] = local.toString();
@@ -234,57 +138,50 @@ export class SecureTunnel {
           req.headers["username"] = sso.username;
           req.headers["password"] = sso.token;
         }
-        if (this.config.verbose) {
-          let wh = res.writeHead;
-          res.writeHead = function () {
-            console.log(
-              label,
-              "<--",
-              arguments[0],
-              arguments[1],
-              JSON.stringify(res.getHeaders())
-            );
-            return wh.apply(this, arguments);
-          };
-          console.log(
-            label,
-            "-->",
-            req.method,
-            req.url,
-            JSON.stringify(req.headers)
-          );
-        }
-        p.on("proxyRes", (proxyRes, req, res) => {
-          this.fixBadCookies(proxyRes);
-        });
-        p.web(
-          req,
-          res,
-          <any>{
-            target: target.toString(),
-            hostRewrite: local.host,
-            ws: true,
-            toProxy: true,
-            autoRewrite: true,
-            changeOrigin: true,
-            secure: sslConfig.secure,
-            protocolRewrite: local.protocol,
-            agent: proxyAgent,
-            ca: sslConfig.ca // not in interface, but passed in to ssl options
-          },
-          err => {
-            if (!this.config.silent) {
-              console.error(
-                label,
-                local.toString(),
-                "<-",
-                target.toString(),
-                err
-              );
+        if (this.config.requests) {
+          const buffer: Uint8Array[] = [];
+          req.on("data", data => {
+            buffer.push(data);
+          });
+          req.on("end", () => {
+            const body = Buffer.concat(buffer).toString();
+            if (body) {
+              console.log(label, "-->", "body:", body);
             }
+          });
+        }
+      });
+
+      let proxyAgent: any = proxyUri ? new ProxyAgent(proxyUri) : null;
+
+      let proxyFunction = (
+        req: http.IncomingMessage,
+        res: http.ServerResponse
+      ) => p.web(req, res, <any>{
+        target: target.toString(),
+        hostRewrite: local.host,
+        ws: true,
+        toProxy: true,
+        autoRewrite: true,
+        changeOrigin: true,
+        secure: sslConfig.secure,
+        protocolRewrite: local.protocol,
+        agent: proxyAgent,
+        ca: sslConfig.ca // not in interface, but passed in to ssl options
+      },
+        err => {
+          if (!this.config.silent) {
+            console.error(
+              label,
+              local.toString(),
+              "<-",
+              target.toString(),
+              err
+            );
           }
-        );
-      };
+        }
+      );
+
 
       let server = local.protocol.startsWith("https")
         ? https.createServer(
@@ -323,17 +220,19 @@ export class SecureTunnel {
             : local.protocol.startsWith("https") ? 443 : 80,
           protocol: local.protocol,
           path: local.pathname
+        }, () => {
+          if (!this.config.silent) {
+            console.log(
+              label,
+              "Started Acrolinx Secure Tunnel",
+              local.toString(),
+              "->",
+              target.toString()
+            );
+          }
         });
-      if (!this.config.silent) {
-        console.log(
-          label,
-          "Started Acrolinx Secure Tunnel",
-          local.toString(),
-          "->",
-          target.toString()
-        );
-      }
-    } catch (err) {
+    }
+    catch (err) {
       if (!this.config.silent) {
         console.error(
           label,
@@ -346,5 +245,5 @@ export class SecureTunnel {
         );
       }
     }
-  };
-}
+  }
+};

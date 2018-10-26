@@ -29,3 +29,17 @@ export interface Config {
   store?: string;
   token?: string;
 }
+
+export interface SecureTunnelConfig {
+  silent: boolean;
+  verbose: boolean;
+  requests: boolean;
+}
+
+export interface SslConfig {
+  passphrase?: string;
+  key?: string;
+  cert?: string;
+  ca?: string[];
+  secure: boolean;
+}
