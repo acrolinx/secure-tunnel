@@ -1,5 +1,7 @@
 # Acrolinx Secure Tunnel
 
+[![Build Status](https://travis-ci.org/acrolinx/secure-tunnel.svg?branch=master)](https://travis-ci.org/acrolinx/secure-tunnel)
+
 ## Introduction
 
 Over the years, we've seen a lot of different scenarios how Acrolinx
