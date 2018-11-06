@@ -12,7 +12,7 @@ export function testUrl(label: string, url: URL, config: SecureTunnelConfig, ssl
     return new Promise((resolve, reject) => {
         let proxyAgent: any = proxyUri ? new ProxyAgent(proxyUri) : null;
         if (config.verbose) {
-            console.log(label, "Connecting: " + url.toString());
+            console.log(new Date().toISOString(), label, "Connecting: " + url.toString());
         }
 
         let options: http.RequestOptions = {
@@ -34,7 +34,7 @@ export function testUrl(label: string, url: URL, config: SecureTunnelConfig, ssl
                     }),
                     res => {
                         if (!config.silent) {
-                            console.log(
+                            console.log(new Date().toISOString(),
                                 label, "Connected",
                                 url.toString(),
                                 res.statusCode,
@@ -46,7 +46,7 @@ export function testUrl(label: string, url: URL, config: SecureTunnelConfig, ssl
                 )
                 .on("error", err => {
                     if (!config.silent) {
-                        console.error(label, url.toString(), err);
+                        console.error(new Date().toISOString(), label, url.toString(), err);
                     }
                     reject();
                 })
@@ -56,13 +56,13 @@ export function testUrl(label: string, url: URL, config: SecureTunnelConfig, ssl
         http
             .request(options, res => {
                 if (!config.silent) {
-                    console.log(label, "Connected", url.toString(), res.statusCode, res.statusMessage);
+                    console.log(new Date().toISOString(), label, "Connected", url.toString(), res.statusCode, res.statusMessage);
                 }
                 resolve(true);
             })
             .on("error", err => {
                 if (!config.silent) {
-                    console.error(label, url.toString(), err);
+                    console.error(new Date().toISOString(), label, url.toString(), err);
                 }
                 reject();
             })

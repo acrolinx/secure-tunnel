@@ -46,7 +46,7 @@ export class SecureTunnel {
 
   startInfoServer = (url: URL, proxyUri: Url | undefined, tunnels: Tunnel[]) => {
     let label: string = hash(url);
-    console.log(label, "Starting Info", url.toString());
+    console.log(new Date().toISOString(), label, "Starting Info", url.toString());
 
     const server = infoServer.create(label, proxyUri, tunnels, this.config.silent);
     this.servers.push(server);
@@ -68,7 +68,7 @@ export class SecureTunnel {
     let label: string = hash(local, target, proxyUri);
     try {
       if (this.config.verbose) {
-        console.log(
+        console.log(new Date().toISOString(),
           label,
           "Starting Acrolinx Secure Tunnel",
           local.toString(),
@@ -82,14 +82,14 @@ export class SecureTunnel {
         this.fixBadCookies(proxyRes);
 
         if (this.config.verbose) {
-          console.log(
+          console.log(new Date().toISOString(),
             label,
             "-->",
             req.method,
             req.url,
             JSON.stringify(req.headers)
           );
-          console.log(
+          console.log(new Date().toISOString(),
             label,
             "<--",
             res.statusCode,
@@ -104,7 +104,7 @@ export class SecureTunnel {
           });
           proxyRes.on("end", () => {
             if (this.config.verbose) {
-              console.log(
+              console.log(new Date().toISOString(),
                 label,
                 "<--",
                 JSON.stringify(res.getHeaders())
@@ -115,15 +115,15 @@ export class SecureTunnel {
               if (res.getHeader("content-encoding") === "gzip") {
                 gunzip(body, (err, result) => {
                   if (err) {
-                    console.log(label, "<--", "gunzip error", err);
-                    console.log(label, "<--", "body (zipped?):", body.toString());
+                    console.log(new Date().toISOString(), label, "<--", "gunzip error", err);
+                    console.log(new Date().toISOString(), label, "<--", "body (zipped?):", body.toString());
                     return;
                   }
-                  console.log(label, "<--", "body unzipped:", result.toString());
+                  console.log(new Date().toISOString(), label, "<--", "body unzipped:", result.toString());
                 });
               }
               else {
-                console.log(label, "<--", "body:", body.toString());
+                console.log(new Date().toISOString(), label, "<--", "body:", body.toString());
               }
             }
           });
@@ -152,7 +152,7 @@ export class SecureTunnel {
           req.on("end", () => {
             const body = Buffer.concat(buffer).toString();
             if (body) {
-              console.log(label, "-->", "body:", body);
+              console.log(new Date().toISOString(), label, "-->", "body:", body);
             }
           });
         }
@@ -177,7 +177,7 @@ export class SecureTunnel {
       },
         err => {
           if (!this.config.silent) {
-            console.error(
+            console.error(new Date().toISOString(),
               label,
               local.toString(),
               "<-",
@@ -210,7 +210,7 @@ export class SecureTunnel {
       server
         .on("error", err => {
           if (!this.config.silent) {
-            console.error(
+            console.error(new Date().toISOString(),
               label,
               local.toString(),
               "->",
@@ -228,7 +228,7 @@ export class SecureTunnel {
           path: local.pathname
         }, () => {
           if (!this.config.silent) {
-            console.log(
+            console.log(new Date().toISOString(),
               label,
               "Started Acrolinx Secure Tunnel",
               local.toString(),
@@ -240,7 +240,7 @@ export class SecureTunnel {
     }
     catch (err) {
       if (!this.config.silent) {
-        console.error(
+        console.error(new Date().toISOString(),
           label,
           "Starting server",
           local.toString(),

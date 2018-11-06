@@ -12,7 +12,7 @@ let toTunnelMapping: (args: string[]) => Tunnel[] = args => {
   const filteredForArrow = args
     .filter(arg => {
       if (arg.indexOf("->") === -1) {
-        console.log("ignoring argument: " + arg);
+        console.log(new Date().toISOString(), "ignoring argument: " + arg);
         return false;
       }
       return true;
@@ -30,7 +30,7 @@ let toTunnelMapping: (args: string[]) => Tunnel[] = args => {
       return tunnel;
     }
     catch (e) {
-      console.error("Ignoring illegal tunnel " + urls + ": " + e);
+      console.error(new Date().toISOString(), "Ignoring illegal tunnel " + urls + ": " + e);
       return undefined;
     }
   });
@@ -122,7 +122,7 @@ export class Cli implements Config {
       if (c.autorun) {
         if (!/^win/.test(process.platform)) {
           if (!c.silent) {
-            console.log("Autorun only supported on windows.");
+            console.log(new Date().toISOString(), "Autorun only supported on windows.");
           }
           throw "Autorun only supported on windows.";
         }
@@ -134,20 +134,20 @@ export class Cli implements Config {
         );
       }
     } catch (err) {
-      console.error("Failed to set autorun: " + err);
+      console.error(new Date().toISOString(), "Failed to set autorun: " + err);
     }
     try {
 
       config.sso = config.getSsoConfig(c.sso);
     } catch (e) {
-      console.error("Failed to set SSO config: " + e);
+      console.error(new Date().toISOString(), "Failed to set SSO config: " + e);
     }
     if (c.info_url) {
       try {
         config.infoUrl = new URL(c.info_url);
       }
       catch (e) {
-        console.error("Failed to set info URL: " + e);
+        console.error(new Date().toISOString(), "Failed to set info URL: " + e);
       }
     }
     config.proxyUrl = await config.getProxyUrl(argv, env, c);
@@ -175,7 +175,7 @@ export class Cli implements Config {
 
       if (!/^win/.test(process.platform)) {
         if (!c.silent) {
-          console.log(
+          console.log(new Date().toISOString(),
             "System proxy only supported on windows. Use -S to disable system proxy usage."
           );
         }
@@ -207,7 +207,7 @@ export class Cli implements Config {
         return new URL(proxyUrl);
       }
     } catch (e) {
-      console.error("Failed to set proxy: " + e);
+      console.error(new Date().toISOString(), "Failed to set proxy: " + e);
       return;
     }
   }
@@ -262,7 +262,7 @@ export class Cli implements Config {
 
     if (ssoValues.length !== 2) {
       if (!this.silent) {
-        console.log("invalid sso: " + sso);
+        console.log(new Date().toISOString(), "invalid sso: " + sso);
       }
       return undefined;
     }

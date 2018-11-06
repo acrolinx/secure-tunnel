@@ -41,7 +41,7 @@ describe("test server", () => {
             fail("the call should throw an exception");
         }
         catch (e) {
-            console.log("Expected exception: " + e + " everything's fine.")
+            console.log(new Date().toISOString(), "Expected exception: " + e + " everything's fine.")
         }
         finally {
             tmpFile.removeCallback();
@@ -81,21 +81,21 @@ const startSslTunnelAndGet = async (tunnel: SecureTunnel, localUrl: string, remo
                         resolve(JSON.parse(content));
                     }
                     catch (err) {
-                        console.error("rejecting (1) because of: " + err);
+                        console.error(new Date().toISOString(), "rejecting (1) because of: " + err);
                         reject(err);
                     }
                 });
                 res.on("error", (err) => {
-                    console.error("rejecting (2) because of: " + err);
+                    console.error(new Date().toISOString(), "rejecting (2) because of: " + err);
                     reject(err);
                 });
             }).on("error", (err) => {
-                console.error("rejecting (3) because of: " + err);
+                console.error(new Date().toISOString(), "rejecting (3) because of: " + err);
                 reject(err);
             }).end();
         }
         catch (err) {
-            console.error("rejecting (4) because of: " + err);
+            console.error(new Date().toISOString(), "rejecting (4) because of: " + err);
             reject(err);
         }
     });
@@ -231,12 +231,12 @@ describe("https tunnel", function () {
         const port = randomPort();
         let data;
         try {
-            console.log("waiting...");
+            console.log(new Date().toISOString(), "waiting...");
             data = await startSslTunnelAndGet(t.tunnel!, "https://localhost:" + port, "http://test.acrolinx.com:8031", port, t.keys!, undefined);
-            console.log("waiting finished");
+            console.log(new Date().toISOString(), "waiting finished");
         }
         catch (error) {
-            console.log("error?");
+            console.log(new Date().toISOString(), "error?");
             if ("DEPTH_ZERO_SELF_SIGNED_CERT" === error.code) {
                 return true;
             }

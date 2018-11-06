@@ -34,7 +34,7 @@ export function create(label: string, proxyUri: Url | undefined, tunnels: Tunnel
         })
         .on("error", err => {
             if (!silent) {
-                console.error(label, "info server", err);
+                console.error(new Date().toISOString(), label, "info server", err);
             }
         });
 }

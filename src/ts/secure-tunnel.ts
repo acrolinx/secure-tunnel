@@ -17,7 +17,7 @@ async function start(p: NodeJS.Process) {
   });
 
   if (config.infoUrl) {
-    console.log(JSON.stringify(config, null, " "));
+    console.log(new Date().toISOString(), JSON.stringify(config, null, " "));
     tunnel.startInfoServer(
       config.infoUrl,
       config.proxyUrl,
