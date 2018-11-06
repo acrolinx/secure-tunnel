@@ -84,16 +84,16 @@ export class SecureTunnel {
         if (this.config.verbose) {
           console.log(
             label,
-            "<--",
-            res.statusCode,
-            res.statusMessage
-          );
-          console.log(
-            label,
             "-->",
             req.method,
             req.url,
             JSON.stringify(req.headers)
+          );
+          console.log(
+            label,
+            "<--",
+            res.statusCode,
+            res.statusMessage
           );
         }
 
