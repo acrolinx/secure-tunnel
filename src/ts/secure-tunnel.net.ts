@@ -86,8 +86,7 @@ export class SecureTunnel {
             label,
             "<--",
             res.statusCode,
-            res.statusMessage,
-            JSON.stringify(res.getHeaders())
+            res.statusMessage
           );
           console.log(
             label,
@@ -104,6 +103,13 @@ export class SecureTunnel {
             buffer.push(data);
           });
           proxyRes.on("end", () => {
+            if (this.config.verbose) {
+              console.log(
+                label,
+                "<--",
+                JSON.stringify(res.getHeaders())
+              );
+            }
             const body = Buffer.concat(buffer);
             if (body) {
               if (res.getHeader("content-encoding") === "gzip") {
