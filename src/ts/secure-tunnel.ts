@@ -62,10 +62,12 @@ async function start(p: NodeJS.Process) {
   _.uniq(config.tunnels.map(p => p.targetUrl)).forEach(url => {
     tunnel.testUrl(url, sslConfig, config.proxyUrl);
     tunnel.testUrl(new URL("/iq/services/v4/rest/core/serverVersion", url), sslConfig, config.proxyUrl);
+    tunnel.testUrl(new URL("/sidebar/v14/version.properties", url), sslConfig, config.proxyUrl);
   });
   _.uniq(config.tunnels.map(p => p.localUrl)).forEach(url => {
     tunnel.testUrl(url, sslConfig);
     tunnel.testUrl(new URL("/iq/services/v4/rest/core/serverVersion", url), sslConfig, config.proxyUrl);
+    tunnel.testUrl(new URL("/sidebar/v14/version.properties", url), sslConfig, config.proxyUrl);
   });
 
   if (!config.silent && config.infoUrl) {
