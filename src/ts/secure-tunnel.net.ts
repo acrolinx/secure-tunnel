@@ -85,7 +85,7 @@ export class SecureTunnel {
           console.log(new Date().toISOString(),
             label,
             "-->",
-            req.url,
+            "" + req.url,
             req.method,
             "headers:",
             JSON.stringify(req.headers)
@@ -93,7 +93,7 @@ export class SecureTunnel {
           console.log(new Date().toISOString(),
             label,
             "<--",
-            req.url,
+            "" + req.url,
             res.statusCode
           );
         }
@@ -108,7 +108,7 @@ export class SecureTunnel {
               console.log(new Date().toISOString(),
                 label,
                 "<--",
-                req.url,
+                "" + req.url,
                 "headers:",
                 JSON.stringify(res.getHeaders())
               );
@@ -118,15 +118,15 @@ export class SecureTunnel {
               if (res.getHeader("content-encoding") === "gzip") {
                 gunzip(body, (err, result) => {
                   if (err) {
-                    console.log(new Date().toISOString(), label, "<--", req.url, "gunzip error", err);
-                    console.log(new Date().toISOString(), label, "<--", req.url, "body (zipped?):", body.toString());
+                    console.log(new Date().toISOString(), label, "<--", "" + req.url, "gunzip error", err);
+                    console.log(new Date().toISOString(), label, "<--", "" + req.url, "body (zipped?):", body.toString());
                     return;
                   }
-                  console.log(new Date().toISOString(), label, "<--", req.url, "body unzipped:", result.toString());
+                  console.log(new Date().toISOString(), label, "<--", "" + req.url, "body unzipped:", result.toString());
                 });
               }
               else {
-                console.log(new Date().toISOString(), label, "<--", req.url, "body:", body.toString());
+                console.log(new Date().toISOString(), label, "<--", "" + req.url, "body:", body.toString());
               }
             }
           });
@@ -155,7 +155,7 @@ export class SecureTunnel {
           req.on("end", () => {
             const body = Buffer.concat(buffer).toString();
             if (body) {
-              console.log(new Date().toISOString(), label, "-->", req.url, "body:", body);
+              console.log(new Date().toISOString(), label, "-->", "" + req.url, "body:", body);
             }
           });
         }
@@ -185,7 +185,7 @@ export class SecureTunnel {
               local.toString(),
               "<-",
               target.toString(), "" +
-              err
+              "" + err
             );
           }
         }
@@ -218,7 +218,7 @@ export class SecureTunnel {
               local.toString(),
               "->",
               target.toString(), "" +
-              err
+              "" + err
             );
           }
         })

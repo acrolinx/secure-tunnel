@@ -12,7 +12,7 @@ export function testUrl(label: string, url: URL, config: SecureTunnelConfig, ssl
     return new Promise((resolve, reject) => {
         let proxyAgent: any = proxyUri ? new ProxyAgent(proxyUri) : null;
         if (config.verbose) {
-            console.log(new Date().toISOString(), label, "Connecting", url);
+            console.log(new Date().toISOString(), label, "Connecting", "" + url);
         }
 
         let options: http.RequestOptions = {
@@ -37,7 +37,7 @@ export function testUrl(label: string, url: URL, config: SecureTunnelConfig, ssl
                             console.log(new Date().toISOString(),
                                 label,
                                 "Connected",
-                                url,
+                                "" + url,
                                 res.statusCode,
                                 res.statusMessage
                             );
@@ -47,7 +47,7 @@ export function testUrl(label: string, url: URL, config: SecureTunnelConfig, ssl
                 )
                 .on("error", err => {
                     if (!config.silent) {
-                        console.error(new Date().toISOString(), label, url, "" + err);
+                        console.error(new Date().toISOString(), label, "" + url, "" + err);
                     }
                     reject();
                 })
@@ -57,13 +57,13 @@ export function testUrl(label: string, url: URL, config: SecureTunnelConfig, ssl
         http
             .request(options, res => {
                 if (!config.silent) {
-                    console.log(new Date().toISOString(), label, "Connected", url, res.statusCode, res.statusMessage);
+                    console.log(new Date().toISOString(), label, "Connected", "" + url, res.statusCode, res.statusMessage);
                 }
                 resolve(true);
             })
             .on("error", err => {
                 if (!config.silent) {
-                    console.error(new Date().toISOString(), label, url, "" + err);
+                    console.error(new Date().toISOString(), label, "" + url, "" + err);
                 }
                 reject();
             })

@@ -30,7 +30,7 @@ let toTunnelMapping: (args: string[]) => Tunnel[] = args => {
       return tunnel;
     }
     catch (e) {
-      console.error(new Date().toISOString(), "Ignoring illegal tunnel", urls, ": " + e);
+      console.error(new Date().toISOString(), "Ignoring illegal tunnel", urls.map(url => "" + url), ": " + e);
       return undefined;
     }
   });
@@ -147,7 +147,7 @@ export class Cli implements Config {
         config.infoUrl = new URL(c.info_url);
       }
       catch (e) {
-        console.error(new Date().toISOString(), "Failed to set info URL: " + e);
+        console.error(new Date().toISOString(), "Failed to set info URL: " + c.info_url + " - " + e);
       }
     }
     config.proxyUrl = await config.getProxyUrl(argv, env, c);
