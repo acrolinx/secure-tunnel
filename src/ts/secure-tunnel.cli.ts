@@ -30,7 +30,7 @@ let toTunnelMapping: (args: string[]) => Tunnel[] = args => {
       return tunnel;
     }
     catch (e) {
-      console.error(new Date().toISOString(), "Ignoring illegal tunnel " + urls + ": " + e);
+      console.error(new Date().toISOString(), "Ignoring illegal tunnel", urls, ": " + e);
       return undefined;
     }
   });
