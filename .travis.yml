@@ -4,3 +4,12 @@ node_js:
 dist: trusty # needs Ubuntu Trusty
 script:
   - npm run release
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file_glob: true
+  file: bin/*
+  skip_cleanup: true
+  draft: true
+  on:
+    tags: true
