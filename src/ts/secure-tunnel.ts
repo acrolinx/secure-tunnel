@@ -6,6 +6,7 @@ import { Config } from "./secure-tunnel.def";
 import { URL, Url } from "url";
 import * as _ from "lodash";
 import opn = require("opn");
+import { hashJson } from "./util";
 let fs = require("fs");
 
 async function start(p: NodeJS.Process) {
@@ -16,8 +17,10 @@ async function start(p: NodeJS.Process) {
     verbose: config.verbose
   });
 
+  if (config.verbose) {
+    console.log(new Date().toISOString(), hashJson(config), JSON.stringify(config, null, " "));
+  }
   if (config.infoUrl) {
-    console.log(new Date().toISOString(), JSON.stringify(config, null, " "));
     tunnel.startInfoServer(
       config.infoUrl,
       config.proxyUrl,
