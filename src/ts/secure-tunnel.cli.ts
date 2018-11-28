@@ -215,7 +215,7 @@ export class Cli implements Config {
   private defineProgramUsage() {
     let p = program
       .description("Acrolinx Secure Tunnel")
-      .version("1.0.666123")
+      .version("1.1.666123")
       .usage("[options] <local-URL->server-URL ...>")
       .option("-v, --verbose", "show accessed URLs")
       .option("-r, --requests", "show requests and responses")
