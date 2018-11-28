@@ -92,7 +92,7 @@ required for your use case.
    to connect to all relevant addresses. Sometimes, the test itself
    may fail even if the connection works later on. For example, if you
    start a tunnel with a custom certificate, but without a custom
-   certificate store, then the certificate is not yet trusted at test
+   certificate store, then the certificate isn’t yet trusted at test
    time.
 4. Acrolinx Secure Tunnel runs with normal user permissions most of
    the time. Only if you want to open a local port < 1024 on a
@@ -220,14 +220,14 @@ You can use several kinds of proxies that
 [node-proxy-agent](https://github.com/TooTallNate/node-proxy-agent)
 supports:
 
-| Protocol    | Example                                                                                     |
-| :---------: | :-----------------------------------------------------------------------------------------: |
-| `http`      | `http://proxy-server-over-tcp.com:3128`                                                     |
-| `https`     | `https://proxy-server-over-tls.com:3129`                                                    |
-| `socks(v5)` | `socks://username:password@some-socks-proxy.com:9050` (username and password are optional)  |
-| `socks5`    | `socks5://username:password@some-socks-proxy.com:9050` (username and password are optional) |
-| `socks4`    | `socks4://some-socks-proxy.com:9050`                                                        |
-| `pac`       | `pac+http://www.example.com/proxy.pac`                                                      |
+| Protocol    | Example                                                                                      |
+| :---------: | :------------------------------------------------------------------------------------------: |
+| `http`      | `http://proxy-server-over-tcp.com:3128`                                                      |
+| `https`     | `https://proxy-server-over-tls.com:3129`                                                     |
+| `socks(v5)` | `socks://username:password@some-socks-proxy.com:9050` (Username and password are optional.)  |
+| `socks5`    | `socks5://username:password@some-socks-proxy.com:9050` (Username and password are optional.) |
+| `socks4`    | `socks4://some-socks-proxy.com:9050`                                                         |
+| `pac`       | `pac+http://www.example.com/proxy.pac`                                                       |
 
 ##### Default Corporate Proxy
 
@@ -375,7 +375,7 @@ see if other customers could benefit from them, too. Note that this
 requires a (trivial) Contributor Agreement.
 
 * [Nodejs =>8.6](https://nodejs.org/en/) must be installed.
-* [VSCode](https://code.visualstudio.com/) is recommended.
+* [Visual Studio Code](https://code.visualstudio.com/) is recommended.
 
 ### Fetch Dependencies
 
@@ -401,11 +401,23 @@ npm run compile
 npm run run
 ```
 
+### Release
+
+1. Make your changes.
+2. Commit your changes.
+3. Run the npm script `pushreleasetogithubandtriggeranewreleasebuild`.
+4. The script will increment the patch version, tag, commit, and push to GitHub.
+5. A trqavis build will start and deploy the release to [releases](https://github.com/acrolinx/secure-tunnel/releases).
+
+```bash
+npm run pushreleasetogithubandtriggeranewreleasebuild
+```
+
 ### Debug
 
 #### Start Debugging Session
 
-![Debug using VSCode.](doc/debug.png)
+![Debug using Visual Studio Code.](doc/debug.png)
 
 The debugger will stop at predefined breakpoints and jump to the
 corresponding code.

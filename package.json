@@ -53,7 +53,10 @@
     "release": "npm run doc",
     "pretest": "npm run build",
     "test": "mocha \"dist/test/**/*.js\" --reporter xunit-file",
-    "test:watch": "tsc --watch 2>&1 | mocha \"dist/test/**/*.js\" --watch 2>&1 | report-viewer --opener"
+    "test:watch": "tsc --watch 2>&1 | mocha \"dist/test/**/*.js\" --watch 2>&1 | report-viewer --opener",
+    "prepushreleasetogithubandtriggeranewreleasebuild": "npm run test",
+    "pushreleasetogithubandtriggeranewreleasebuild": "npm version patch -m \"v%s\"",
+    "postpushreleasetogithubandtriggeranewreleasebuild": "git push && git push --tags"
   },
   "dependencies": {
     "@types/http-proxy": "^1.16.2",
