@@ -1,6 +1,6 @@
 /* Copyright (c) 2017-present Acrolinx GmbH */
 
-import { URL } from "url";
+import {URL} from 'url';
 
 export interface Tunnel {
   localUrl: URL;

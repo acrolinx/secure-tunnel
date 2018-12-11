@@ -1,24 +1,27 @@
 /* Copyright (c) 2017-present Acrolinx GmbH */
 
-import { SecureTunnel, SslConfig } from "./secure-tunnel.net";
-import { Cli } from "./secure-tunnel.cli";
-import { Config } from "./secure-tunnel.def";
-import { URL, Url } from "url";
-import * as _ from "lodash";
-import opn = require("opn");
-import { hashJson } from "./util";
-let fs = require("fs");
+import * as fs from 'fs';
+import * as _ from 'lodash';
+import opn = require('opn');
+import {URL} from 'url';
+import {Cli} from './secure-tunnel.cli';
+import {Config} from './secure-tunnel.def';
+import {SecureTunnel, SslConfig} from './secure-tunnel.net';
+import {hashJson} from './util';
+
+
+// tslint:disable no-floating-promises
 
 async function start(p: NodeJS.Process) {
-  let config: Config = await Cli.parse(p.argv, p.env);
-  let tunnel = new SecureTunnel({
+  const config: Config = await Cli.parse(p.argv, p.env);
+  const tunnel = new SecureTunnel({
     silent: config.silent,
     requests: config.requests,
     verbose: config.verbose
   });
 
   if (config.verbose) {
-    console.log(new Date().toISOString(), hashJson(config), JSON.stringify(config, null, " "));
+    console.log(new Date().toISOString(), hashJson(config), JSON.stringify(config, null, ' '));
   }
   if (config.infoUrl) {
     tunnel.startInfoServer(
@@ -30,29 +33,29 @@ async function start(p: NodeJS.Process) {
 
   let ca: string[] | undefined;
   if (config.store) {
-    let store: string = fs.readFileSync(config.store).toString();
+    const store: string = fs.readFileSync(config.store).toString();
     ca = store
       .split(/-----END CERTIFICATE-----\n?/)
-      .filter(c => c !== "")
-      .map(c => c + "-----END CERTIFICATE-----\n");
+      .filter(c => c !== '')
+      .map(c => c + '-----END CERTIFICATE-----\n');
   }
 
-  let sslConfig: SslConfig = {
+  const sslConfig: SslConfig = {
     key: config.key,
     cert: config.cert,
     passphrase: config.passphrase,
-    ca: ca,
+    ca,
     secure: config.secure
   };
 
   if (!sslConfig.secure) {
-    console.warn("Warning: Tunnel has been started in a mode where it doesn't validate ssl certificates.")
+    console.warn("Warning: Tunnel has been started in a mode where it doesn't validate ssl certificates.");
   }
 
-  config.tunnels.forEach(p =>
+  config.tunnels.forEach(tunnelConf =>
     tunnel.startTunnel(
-      p.localUrl,
-      p.targetUrl,
+      tunnelConf.localUrl,
+      tunnelConf.targetUrl,
       sslConfig,
       config.proxyUrl,
       config.token,
@@ -62,15 +65,15 @@ async function start(p: NodeJS.Process) {
   if (config.infoUrl) {
     tunnel.testUrl(config.infoUrl, sslConfig);
   }
-  _.uniq(config.tunnels.map(p => p.targetUrl)).forEach(url => {
+  _.uniq(config.tunnels.map(tunnelConf => tunnelConf.targetUrl)).forEach(url => {
     tunnel.testUrl(url, sslConfig, config.proxyUrl);
-    tunnel.testUrl(new URL("/iq/services/v4/rest/core/serverVersion", url), sslConfig, config.proxyUrl);
-    tunnel.testUrl(new URL("/sidebar/v14/version.properties", url), sslConfig, config.proxyUrl);
+    tunnel.testUrl(new URL('/iq/services/v4/rest/core/serverVersion', url), sslConfig, config.proxyUrl);
+    tunnel.testUrl(new URL('/sidebar/v14/version.properties', url), sslConfig, config.proxyUrl);
   });
-  _.uniq(config.tunnels.map(p => p.localUrl)).forEach(url => {
+  _.uniq(config.tunnels.map(tunnelConf => tunnelConf.localUrl)).forEach(url => {
     tunnel.testUrl(url, sslConfig);
-    tunnel.testUrl(new URL("/iq/services/v4/rest/core/serverVersion", url), sslConfig, config.proxyUrl);
-    tunnel.testUrl(new URL("/sidebar/v14/version.properties", url), sslConfig, config.proxyUrl);
+    tunnel.testUrl(new URL('/iq/services/v4/rest/core/serverVersion', url), sslConfig, config.proxyUrl);
+    tunnel.testUrl(new URL('/sidebar/v14/version.properties', url), sslConfig, config.proxyUrl);
   });
 
   if (!config.silent && config.infoUrl) {
