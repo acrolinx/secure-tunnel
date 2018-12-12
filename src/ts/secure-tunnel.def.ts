@@ -12,15 +12,12 @@ export interface SsoConfig {
   token: string;
 }
 
-export interface Config {
+export interface Config extends SecureTunnelConfig {
   sso?: SsoConfig;
   useEvnironmentProxy: boolean;
   useSystemProxy: boolean;
   proxyUrl?: URL;
   tunnels: Tunnel[];
-  requests: boolean;
-  silent: boolean;
-  verbose: boolean;
   infoUrl?: URL;
   secure: boolean;
   key?: string;
@@ -34,6 +31,7 @@ export interface SecureTunnelConfig {
   silent: boolean;
   verbose: boolean;
   requests: boolean;
+  blockWithoutRequiredCookie: boolean;
 }
 
 export interface SslConfig {

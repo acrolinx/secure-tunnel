@@ -1,16 +1,16 @@
 /* Copyright (c) 2017-present Acrolinx GmbH */
 
+import * as fs from 'fs';
 import * as http from 'http';
 import * as proxy from 'http-proxy';
 import * as https from 'https';
 import {URL, Url} from 'url';
 import {gunzip} from 'zlib';
+import {blockWithoutRequiredCookie} from './block-without-required-cookie';
 import * as infoServer from './info-server';
 import {SecureTunnelConfig, SslConfig, SsoConfig, Tunnel} from './secure-tunnel.def';
 import * as urlTester from './url-tester';
 import {hash} from './util';
-
-import * as fs from 'fs';
 
 // tslint:disable-next-line variable-name no-var-requires
 const ProxyAgent = require('proxy-agent');
@@ -127,7 +127,14 @@ export class SecureTunnel {
         }
       });
 
-      p.on('proxyReq', (_proxyReq, req, _res) => {
+      p.on('proxyReq', (proxyReq, req, res) => {
+        if (this.config.blockWithoutRequiredCookie) {
+          const blockedBecauseOfMissingCookie = blockWithoutRequiredCookie(proxyReq, req, res);
+          if (blockedBecauseOfMissingCookie) {
+              return;
+          }
+        }
+
         req.headers.host = target.host;
         if (!req.headers['x-acrolinx-base-url']) {
           req.headers['X-Acrolinx-Base-URL'] = local.toString();

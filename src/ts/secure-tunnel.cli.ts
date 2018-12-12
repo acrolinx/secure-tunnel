@@ -3,6 +3,10 @@
 import * as program from 'commander';
 import {URL} from 'url';
 import * as Registry from 'winreg';
+import {
+  BLOCK_WITHOUT_REQUIRED_COOKIE_CLI_OPTION,
+  BLOCK_WITHOUT_REQUIRED_COOKIE_CLI_OPTION_DESCRIPTION
+} from './block-without-required-cookie';
 import {Config, SsoConfig, Tunnel} from './secure-tunnel.def';
 
 const toTunnelMapping: (args: string[]) => Tunnel[] = args => {
@@ -97,6 +101,8 @@ export class Cli implements Config {
     config.useSystemProxy = c.system_proxy;
     config.useEvnironmentProxy = c.evnironment_proxy;
 
+    config.blockWithoutRequiredCookie = !!c[BLOCK_WITHOUT_REQUIRED_COOKIE_CLI_OPTION];
+
     try {
       if (c.autorun) {
         if (!/^win/.test(process.platform)) {
@@ -131,6 +137,7 @@ export class Cli implements Config {
     config.proxyUrl = await config.getProxyUrl(argv, env, c);
     return config;
   }
+
   public store?: string;
   public cert?: string;
   public passphrase?: string;
@@ -147,6 +154,7 @@ export class Cli implements Config {
   public verbose: boolean;
   public token?: string;
   public infopage?: boolean;
+  public blockWithoutRequiredCookie: boolean;
 
   private constructor() {
   }
@@ -210,7 +218,7 @@ export class Cli implements Config {
   }
 
   private defineProgramUsage() {
-    const p = program
+    return program
       .description('Acrolinx Secure Tunnel')
       .version('INTERNAL')
       .usage('[options] <local-URL->server-URL ...>')
@@ -247,8 +255,10 @@ export class Cli implements Config {
       .option(
         '-n, --token <authorization token>',
         'add an authorization token to all requests'
+      ).option(
+        '--' + BLOCK_WITHOUT_REQUIRED_COOKIE_CLI_OPTION,
+        BLOCK_WITHOUT_REQUIRED_COOKIE_CLI_OPTION_DESCRIPTION
       );
-    return p;
   }
 
   private getSsoConfig(sso: string): SsoConfig | undefined {

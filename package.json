@@ -54,7 +54,7 @@
     "prerelease": "npm run setversion && npm run compile",
     "release": "npm run doc",
     "pretest": "npm run build",
-    "test": "mocha \"dist/test/**/*.js\" --reporter xunit-file",
+    "test": "mocha \"dist/test/**/*.js\" --reporter xunit-file --reporter spec",
     "test:watch": "tsc --watch 2>&1 | mocha \"dist/test/**/*.js\" --watch 2>&1 | report-viewer --opener",
     "prepushreleasetogithubandtriggeranewreleasebuild": "npm run test",
     "pushreleasetogithubandtriggeranewreleasebuild": "npm version patch -m \"v%s\"",

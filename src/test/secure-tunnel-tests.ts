@@ -13,6 +13,7 @@ import {CertificateCreationResult, createCertificate} from 'pem';
 import * as tmp from 'tmp';
 import {URL} from 'url';
 import {SecureTunnel, SecureTunnelConfig, SslConfig} from '../ts/secure-tunnel.net';
+import {randomPort, startTunnelAndFetch} from './test-utils/test-utils';
 
 chai.use(chaiString);
 describe('test server', () => {
@@ -51,13 +52,10 @@ describe('test server', () => {
 const config: SecureTunnelConfig = {
   silent: false,
   verbose: true,
-  requests: true
+  requests: true,
+  blockWithoutRequiredCookie: false
 };
 
-const startTunnelAndFetch = async (tunnel: SecureTunnel, localUrl: string, remoteUrl: string, sslConfig: SslConfig) => {
-  tunnel.startTunnel(new URL(localUrl), new URL(remoteUrl), sslConfig, undefined, undefined, undefined);
-  return await fetch(localUrl + '/iq/services/rest/registry/knownServiceNames');
-};
 
 const startSslTunnelAndGet = async (tunnel: SecureTunnel, localUrl: string, remoteUrl: string, port: number, sslConfig: SslConfig, certificate?: string) => {
   tunnel!.startTunnel(new URL(localUrl), new URL(remoteUrl), sslConfig, undefined, undefined, undefined);
@@ -97,10 +95,6 @@ const startSslTunnelAndGet = async (tunnel: SecureTunnel, localUrl: string, remo
   });
 
   return data;
-};
-
-const randomPort = () => {
-  return Math.floor(Math.random() * 10000 + 18031);
 };
 
 describe('http tunnel', () => {

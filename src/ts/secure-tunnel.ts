@@ -14,11 +14,7 @@ import {hashJson} from './util';
 
 async function start(p: NodeJS.Process) {
   const config: Config = await Cli.parse(p.argv, p.env);
-  const tunnel = new SecureTunnel({
-    silent: config.silent,
-    requests: config.requests,
-    verbose: config.verbose
-  });
+  const tunnel = new SecureTunnel({...config});
 
   if (config.verbose) {
     console.log(new Date().toISOString(), hashJson(config), JSON.stringify(config, null, ' '));

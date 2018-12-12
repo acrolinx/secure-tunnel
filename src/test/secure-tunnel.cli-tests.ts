@@ -7,6 +7,7 @@ import chaiString = require('chai-string');
 import 'isomorphic-fetch';
 import 'mocha';
 import {URL} from 'url';
+import {BLOCK_WITHOUT_REQUIRED_COOKIE_CLI_OPTION} from '../ts/block-without-required-cookie';
 import {Cli} from '../ts/secure-tunnel.cli';
 import {Tunnel} from '../ts/secure-tunnel.def';
 
@@ -105,6 +106,7 @@ describe('command line arguments parsing of', () => {
     expect(config.infoUrl).to.be.deep.equal(new URL('http://localhost8000'));
     return true;
   });
+
   it('verbose default off', async () => {
     const config = await parse(['http://localhost:1->http://localhost:2']);
 
@@ -116,6 +118,21 @@ describe('command line arguments parsing of', () => {
     const config = await parse(['-v', 'http://localhost:1->http://localhost:2']);
 
     expect(config.verbose).to.be.equal(true);
+    return true;
+  });
+
+  it('blockWithoutRequiredCookie default off', async () => {
+    const config = await parse(['http://localhost:1->http://localhost:2']);
+
+    expect(config.blockWithoutRequiredCookie).to.be.not.equal(true);
+    return true;
+  });
+
+  it('--block-without-required-cookie turns blockWithoutRequiredCookie on', async () => {
+    const config = await parse(['--' + BLOCK_WITHOUT_REQUIRED_COOKIE_CLI_OPTION,
+      'http://localhost:1->http://localhost:2']);
+
+    expect(config.blockWithoutRequiredCookie).to.be.equal(true);
     return true;
   });
 
