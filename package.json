@@ -40,7 +40,7 @@
     "prebuild": "npm run clean",
     "build": "tsc",
     "buildWatch": "tsc -w",
-    "run": "tsc && node dist/ts/secure-tunnel.js \"http://localhost:7777->https://test-latest-ssl.acrolinx.com\" -rv",
+    "run": "tsc && node dist/ts/secure-tunnel.js \"http://localhost:7777->https://test-ssl.acrolinx.com\" -rv",
     "tslint": "tslint -p tsconfig.json",
     "tslintFix": "tslint -p tsconfig.json --fix",
     "precompile": "npm run test && rm -rf bin && mkdir bin 2>NUL",
