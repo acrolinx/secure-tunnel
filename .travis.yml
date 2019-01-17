@@ -4,6 +4,10 @@ node_js:
 dist: trusty # needs Ubuntu Trusty
 script:
   - npm run release
+os:
+- windows
+- linux
+- osx
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
@@ -12,3 +16,4 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
+    os: linux
