@@ -2,19 +2,19 @@
 
 import * as fs from 'fs';
 import * as _ from 'lodash';
-import opn = require('opn');
-import {URL} from 'url';
-import {Cli} from './secure-tunnel.cli';
-import {Config} from './secure-tunnel.def';
-import {SecureTunnel, SslConfig} from './secure-tunnel.net';
-import {hashJson} from './util';
+import opn = require('open');
+import { URL } from 'url';
+import { Cli } from './secure-tunnel.cli';
+import { Config } from './secure-tunnel.def';
+import { SecureTunnel, SslConfig } from './secure-tunnel.net';
+import { hashJson } from './util';
 
 
 // tslint:disable no-floating-promises
 
 async function start(p: NodeJS.Process) {
   const config: Config = await Cli.parse(p.argv, p.env);
-  const tunnel = new SecureTunnel({...config});
+  const tunnel = new SecureTunnel({ ...config });
 
   if (config.verbose) {
     console.log(new Date().toISOString(), hashJson(config), JSON.stringify(config, null, ' '));
