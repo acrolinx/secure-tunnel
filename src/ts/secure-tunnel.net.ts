@@ -4,18 +4,18 @@ import * as fs from 'fs';
 import * as http from 'http';
 import * as proxy from 'http-proxy';
 import * as https from 'https';
-import {URL, Url} from 'url';
-import {gunzip} from 'zlib';
-import {blockWithoutRequiredCookie} from './block-without-required-cookie';
+import { URL, Url } from 'url';
+import { gunzip } from 'zlib';
+import { blockWithoutRequiredCookie } from './block-without-required-cookie';
 import * as infoServer from './info-server';
-import {SecureTunnelConfig, SslConfig, SsoConfig, Tunnel} from './secure-tunnel.def';
+import { SecureTunnelConfig, SslConfig, SsoConfig, Tunnel } from './secure-tunnel.def';
 import * as urlTester from './url-tester';
-import {hash} from './util';
+import { hash } from './util';
 
 // tslint:disable-next-line variable-name no-var-requires
 const ProxyAgent = require('proxy-agent');
 
-export {SecureTunnelConfig, SslConfig};
+export { SecureTunnelConfig, SslConfig };
 
 export class SecureTunnel {
   private config: SecureTunnelConfig;
@@ -131,7 +131,7 @@ export class SecureTunnel {
         if (this.config.blockWithoutRequiredCookie) {
           const blockedBecauseOfMissingCookie = blockWithoutRequiredCookie(proxyReq, req, res);
           if (blockedBecauseOfMissingCookie) {
-              return;
+            return;
           }
         }
 
@@ -140,11 +140,13 @@ export class SecureTunnel {
           req.headers['X-Acrolinx-Base-URL'] = local.toString();
         }
         if (token) {
+          console.log(new Date().toISOString(), label, '-->', '' + req.url, 'adding token to header');
           req.headers.authorization = token;
           req.headers.authtoken = token;
           req.headers['X-Acrolinx-Auth'] = token;
         }
         if (sso) {
+          console.log(new Date().toISOString(), label, '-->', '' + req.url, 'adding sso to header');
           req.headers.username = sso.username;
           req.headers.password = sso.token;
         }
@@ -168,17 +170,17 @@ export class SecureTunnel {
         req: http.IncomingMessage,
         res: http.ServerResponse
       ) => p.web(req, res, {
-          target: target.toString(),
-          hostRewrite: local.host,
-          ws: true,
-          toProxy: true,
-          autoRewrite: true,
-          changeOrigin: true,
-          secure: sslConfig.secure,
-          protocolRewrite: local.protocol,
-          agent: proxyAgent,
-          ca: sslConfig.ca // not in interface, but passed in to ssl options
-        } as any,
+        target: target.toString(),
+        hostRewrite: local.host,
+        ws: true,
+        toProxy: true,
+        autoRewrite: true,
+        changeOrigin: true,
+        secure: sslConfig.secure,
+        protocolRewrite: local.protocol,
+        agent: proxyAgent,
+        ca: sslConfig.ca // not in interface, but passed in to ssl options
+      } as any,
         err => {
           if (!this.config.silent) {
             console.error(new Date().toISOString(),
