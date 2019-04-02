@@ -5,7 +5,7 @@ dist: trusty # needs Ubuntu Trusty
 script:
   - npm run release
 os:
-#- windows
+- windows
 - linux
 - osx
 deploy:
