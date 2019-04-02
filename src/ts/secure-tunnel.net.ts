@@ -94,9 +94,11 @@ export class SecureTunnel {
         }
 
         if (this.config.requests) {
-          const buffer: Uint8Array[] = [];
+          const buffer: Buffer[] = [];
           proxyRes.on('data', data => {
-            buffer.push(data);
+            if (Buffer.isBuffer(data)) {
+              buffer.push(data);
+            }
           });
           proxyRes.on('end', () => {
             if (this.config.verbose) {
@@ -151,9 +153,11 @@ export class SecureTunnel {
           req.headers.password = sso.token;
         }
         if (this.config.requests) {
-          const buffer: Uint8Array[] = [];
+          const buffer: Buffer[] = [];
           req.on('data', data => {
-            buffer.push(data);
+            if (Buffer.isBuffer(data)) {
+              buffer.push(data);
+            }
           });
           req.on('end', () => {
             const body = Buffer.concat(buffer).toString();

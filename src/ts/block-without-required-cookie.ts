@@ -11,10 +11,11 @@ export const SET_REQUIRED_COOKIE_PATH = '/set-required-cookie';
 /**
  * @return returns true if the request is blocked (handled) and should not be proxied.
  */
-export function blockWithoutRequiredCookie(proxyReq: http.ClientRequest,
-                                           req: http.IncomingMessage,
-                                           res: http.ServerResponse): boolean {
-  const cookies = req.headers.cookie;
+export function blockWithoutRequiredCookie(
+  proxyReq: http.ClientRequest,
+  req: http.IncomingMessage,
+  res: http.ServerResponse): boolean {
+  const cookies = req.headers.cookie instanceof Array ? req.headers.cookie.join('\n') : req.headers.cookie;
   const isRequiredCookieSet = !!cookies && cookies.includes(REQUIRED_COOKIE);
 
   if (req.url === SET_REQUIRED_COOKIE_PATH) {
@@ -51,7 +52,7 @@ function renderSetCookiePage(res: http.ServerResponse, isRequiredCookieSet: bool
 }
 
 function renderMissingCookiePage(res: http.ServerResponse) {
-  res.writeHead(401, {'Content-Type': 'text/html'});
+  res.writeHead(401, { 'Content-Type': 'text/html' });
 
   res.end(`
     <html>
