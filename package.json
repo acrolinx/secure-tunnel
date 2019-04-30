@@ -41,7 +41,7 @@
   },
   "scripts": {
     "clean": "rimraf dist bin",
-    "prebuild": "npm run clean && npm run tslint",
+    "prebuild": "npm run clean",
     "build": "tsc",
     "buildWatch": "tsc -w",
     "run": "tsc && node dist/ts/secure-tunnel.js \"http://localhost:7777->https://test-ssl.acrolinx.com\" -rv",
