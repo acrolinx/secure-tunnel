@@ -47,7 +47,7 @@
     "run": "tsc && node dist/ts/secure-tunnel.js \"http://localhost:7777->https://test-ssl.acrolinx.com\" -rv",
     "tslint": "tslint -p tsconfig.json \"src/**/*.ts\"",
     "tslintFix": "tslint -p tsconfig.json \"src/**/*.ts\" --fix",
-    "precompile": "npm run test && (rmdir /s /q bin || rm -rf bin) && mkdir bin 2>NUL",
+    "precompile": "npm run test && (rm -rf bin || if exist bin rmdir /s /q bin) && mkdir bin 2>NUL",
     "compile": "cross-var node node_modules/nexe/index.js dist/ts/secure-tunnel.js -t windows-x86-8.6.0 -n bin/secure-tunnel-windows-x86-v$npm_package_version && cross-var node node_modules/nexe/index.js dist/ts/secure-tunnel.js -t windows-x64-8.6.0 -n bin/secure-tunnel-windows-x64-v$npm_package_version && cross-var node node_modules/nexe/index.js dist/ts/secure-tunnel.js -t mac-x64-8.6.0 -n bin/secure-tunnel-mac-x64-v$npm_package_version && cross-var node node_modules/nexe/index.js dist/ts/secure-tunnel.js -t linux-x64-8.6.0 -n bin/secure-tunnel-linux-x64-v$npm_package_version && cross-var node node_modules/nexe/index.js dist/ts/secure-tunnel.js -t linux-x86-8.6.0 -n bin/secure-tunnel-linux-x86-v$npm_package_version",
     "predebug": "npm run precompile",
     "debug": "node --nolazy --inspect=9228 --debug-brk dist/ts/secure-tunnel.js",
