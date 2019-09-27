@@ -15,7 +15,7 @@ export function blockWithoutRequiredCookie(
   proxyReq: http.ClientRequest,
   req: http.IncomingMessage,
   res: http.ServerResponse): boolean {
-  const cookies = req.headers.cookie instanceof Array ? req.headers.cookie.join('\n') : req.headers.cookie;
+  const cookies = req.headers.cookie;
   const isRequiredCookieSet = !!cookies && cookies.includes(REQUIRED_COOKIE);
 
   if (req.url === SET_REQUIRED_COOKIE_PATH) {
