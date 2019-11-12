@@ -24,6 +24,10 @@ huge help if you're not familiar with those other tools. However,
 you may of course consider other solutions based on
 well-established, freely available programs.
 
+## Download
+
+See: [Releases](https://github.com/acrolinx/secure-tunnel/releases)
+
 ### Target Audiences
 
 * System administrators who want to analyze problems that their users
