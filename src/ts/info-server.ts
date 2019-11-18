@@ -1,10 +1,10 @@
 /* Copyright (c) 2018-present Acrolinx GmbH */
 
 import * as http from 'http';
-import {Url} from 'url';
+import {URL} from 'url';
 import {Tunnel} from './secure-tunnel.def';
 
-export function create(label: string, proxyUri: Url | undefined, tunnels: Tunnel[], silent?: boolean) {
+export function create(label: string, proxyUri: URL | undefined, tunnels: Tunnel[], silent?: boolean) {
   return http
     .createServer((_req, res) => {
       res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});

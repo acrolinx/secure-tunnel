@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as http from 'http';
 import * as proxy from 'http-proxy';
 import * as https from 'https';
-import { URL, Url } from 'url';
+import { URL } from 'url';
 import { gunzip } from 'zlib';
 import { blockWithoutRequiredCookie } from './block-without-required-cookie';
 import * as infoServer from './info-server';
@@ -39,7 +39,7 @@ export class SecureTunnel {
     }
   }
 
-  public startInfoServer = (url: URL, proxyUri: Url | undefined, tunnels: Tunnel[]) => {
+  public startInfoServer = (url: URL, proxyUri: URL | undefined, tunnels: Tunnel[]) => {
     const label: string = hash(url);
     console.log(new Date().toISOString(), label, 'Starting Info', url.toString());
 

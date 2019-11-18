@@ -1,11 +1,11 @@
 /* Copyright (c) 2018-present Acrolinx GmbH */
 
-import {Url} from 'url';
+import {URL} from 'url';
 
 // tslint:disable-next-line no-var-requires
 const crypto = require('crypto');
 
-export function hash(...urls: Array<Url | undefined>): string {
+export function hash(...urls: Array<URL | undefined>): string {
   const text = urls.map(u => u ? '' + u : '').join('');
   return hashString(text);
 }
