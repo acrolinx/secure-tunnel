@@ -85,7 +85,7 @@ many different ways. Make sure that you only enable the options
 required for your use case.
 
 1. Signing in to the Dashboard of the Acrolinx Platform using Acrolinx
-   Secure Tunnel doesn't work in all cases. If the Acrolinx Sign-in page
+   Secure Tunnel doesn't work in all cases. If the Acrolinx sign-in page
     opens a URL on localhost (like
    `http://localhost:8031/dashboard.html?login=something-long`) and
    doesn't work reliably, manually modify the URL to contain the
@@ -134,7 +134,7 @@ required for your use case.
     helps you find out which connection the log messages belong
     to. The hash is reproducible. Whenever you use the same
     combination, you'll get the same hash. This is also helpful if
-    you want to compare your secure-tunnel configuration with a
+    you want to compare your Secure Tunnel configuration with a
     configuration on another computer.
 
 ### Use Cases
@@ -155,7 +155,7 @@ handle the SSL termination.
 
 _Keep in mind that all used certificates have to be in `ca.pem`
 otherwise the connection will fail. Even the default root certificates
-aren't trusted any more._
+aren't trusted anymore._
 
 #### Local Access for an HTTPS-Secured Acrolinx Platform
 
@@ -224,14 +224,14 @@ You can use several kinds of proxies that
 [node-proxy-agent](https://github.com/TooTallNate/node-proxy-agent)
 supports:
 
-| Protocol    | Example                                                                                      |
+|  Protocol   |                                           Example                                            |
 | :---------: | :------------------------------------------------------------------------------------------: |
-| `http`      | `http://proxy-server-over-tcp.com:3128`                                                      |
-| `https`     | `https://proxy-server-over-tls.com:3129`                                                     |
+|   `http`    |                           `http://proxy-server-over-tcp.com:3128`                            |
+|   `https`   |                           `https://proxy-server-over-tls.com:3129`                           |
 | `socks(v5)` | `socks://username:password@some-socks-proxy.com:9050` (Username and password are optional.)  |
-| `socks5`    | `socks5://username:password@some-socks-proxy.com:9050` (Username and password are optional.) |
-| `socks4`    | `socks4://some-socks-proxy.com:9050`                                                         |
-| `pac`       | `pac+http://www.example.com/proxy.pac`                                                       |
+|  `socks5`   | `socks5://username:password@some-socks-proxy.com:9050` (Username and password are optional.) |
+|  `socks4`   |                             `socks4://some-socks-proxy.com:9050`                             |
+|    `pac`    |                            `pac+http://www.example.com/proxy.pac`                            |
 
 ##### Default Corporate Proxy
 
@@ -378,7 +378,7 @@ your changes back. We're already looking forward to reviewing them and
 see if other customers could benefit from them, too. Note that this
 requires a (trivial) Contributor Agreement.
 
-* [Nodejs =>8.6](https://nodejs.org/en/) must be installed.
+* [NodeJS =>8.6](https://nodejs.org/en/) must be installed.
 * [Visual Studio Code](https://code.visualstudio.com/) is recommended.
 
 ### Fetch Dependencies
@@ -387,7 +387,7 @@ requires a (trivial) Contributor Agreement.
 npm i
 ```
 
-### Compile Code for Nodejs
+### Compile Code for NodeJS
 
 ```bash
 npm run build
