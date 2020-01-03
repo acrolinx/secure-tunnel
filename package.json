@@ -65,7 +65,7 @@
     "postpushreleasetogithubandtriggeranewreleasebuild": "git push && git push --tags"
   },
   "dependencies": {
-    "commander": "^2.12.2",
+    "commander": "^4.0.1",
     "getpass": "^0.1.7",
     "http-proxy": "^1.16.2",
     "lodash": "^4.17.4",
