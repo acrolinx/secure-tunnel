@@ -13,7 +13,7 @@ For those cases, the Acrolinx Secure Tunnel aims to be both a helpful
 tool to analyze the problems and a secure solution for easy
 connections to the Acrolinx Platform.
 
-We describe different use cases [below](#use-cases).
+We describe the different use cases [below](#use-cases).
 
 Many use cases could also be solved with commonly available tools like
 [nginx](https://nginx.org/en/), [Squid](http://www.squid-cache.org/),
@@ -30,7 +30,7 @@ See: [Releases](https://github.com/acrolinx/secure-tunnel/releases)
 
 ### Target Audiences
 
-* System administrators who want to analyze problems that their users
+* System administrators who want to analyze the problems that their users
   face when connecting to Acrolinx.
 * Solution engineers who need to enable connections to the Acrolinx
   Platform in unusual scenarios.
@@ -39,7 +39,7 @@ See: [Releases](https://github.com/acrolinx/secure-tunnel/releases)
 * Writers who need to connect to different installations of the
   Acrolinx Platform and switch easily between them.
 * Also developers, support engineers, and network engineers might
-  benefit from Acrolinx Secure Tunnel.
+  benefit from the Acrolinx Secure Tunnel.
 
 ## Usage
 
@@ -84,7 +84,7 @@ In general, note that this tool is very versatile and can be used in
 many different ways. Make sure that you only enable the options
 required for your use case.
 
-1. Signing in to the Dashboard of the Acrolinx Platform using Acrolinx
+1. Signing in to the Dashboard of the Acrolinx Platform using the Acrolinx
    Secure Tunnel doesn't work in all cases. If the Acrolinx sign-in page
     opens a URL on localhost (like
    `http://localhost:8031/dashboard.html?login=something-long`) and
@@ -108,7 +108,7 @@ required for your use case.
    instead of "localhost".
 6. If you're happy with your current configuration and want to start
    it automatically, just add `-a`. This adds Acrolinx Secure Tunnel
-   with the given settings to Windows AutoRun. If you want to remove
+   with the given settings to the Windows auto run. If you want to remove
    it again later, use `regedit`, navigate to
    `HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run`,
    and delete the key `acrolinx_secure_tunnel`, or use [Sysinternals
@@ -142,7 +142,7 @@ required for your use case.
 #### Acrolinx Platform with Custom Certificate for HTTPS
 
 When your Acrolinx Platform is secured by a certificate not supported
-by all of your integrations, you can use Acrolinx Secure Tunnel to
+by all of your integrations, you can use the Acrolinx Secure Tunnel to
 handle the SSL termination.
 
 1. Start the HTTP to HTTPS tunnel:
@@ -200,7 +200,7 @@ console.**
 
 Some Acrolinx Integrations run in environments where you can't defined
 proxy settings or the default proxy settings aren’t picked up. In
-those cases, Acrolinx Secure Tunnel allows tunneling the communication
+those cases, the Acrolinx Secure Tunnel allows tunneling the communication
 through the proxy.
 
 ##### Custom Proxy
@@ -221,7 +221,7 @@ Internally the
 used.
 
 You can use several kinds of proxies that
-[node-proxy-agent](https://github.com/TooTallNate/node-proxy-agent)
+[`node-proxy-agent`](https://github.com/TooTallNate/node-proxy-agent)
 supports:
 
 |  Protocol   |                                           Example                                            |
@@ -284,7 +284,7 @@ secure-tunnel  -k key.pem -c cert.pem -e password "https://localhost:443->http:/
 
 This is a rare use-case and we recomment you solve this with better
 configurations of the Acrolinx Platform. We just document it here to
-show the flexibility of Acrolinx Secure Tunnel.
+show the flexibility of the Acrolinx Secure Tunnel.
 
 Imagine, you want to connect two departments. One department already
 uses Acrolinx, but without SSL. The second department should be able
@@ -320,7 +320,7 @@ You already configured [single
 sign-on](https://docs.acrolinx.com/coreplatform/latest/en/advanced/sidebar-configurations/set-up-acrolinx-for-single-sign-on)
 for your Acrolinx Platform. You want to connect an integration like
 AEM or Wordpress to your Platform, but something went wrong. You need
-to troubleshoot the setup and use Acrolinx Secure Tunnel for
+to troubleshoot the setup and use the Acrolinx Secure Tunnel for
 debugging.
 
 ![SSO Reverse Proxy Diagram](doc/sidebarArchitectureDiagram14.3.1.png)
@@ -371,7 +371,7 @@ attackers to perform man in the middle attacks on you._
 ## Development
 
 This section is only relevant to you if you want to contribute to
-Acrolinx Secure Tunnel or want to adjust it to your needs.
+the Acrolinx Secure Tunnel or want to adjust it to your needs.
 
 And when you're done with your changes, please consider contributing
 your changes back. We're already looking forward to reviewing them and
