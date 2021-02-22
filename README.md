@@ -317,7 +317,7 @@ read the traffic.
 #### Ensure Correct SSO Configuration
 
 You already configured [single
-sign-on](https://docs.acrolinx.com/coreplatform/latest/en/advanced/sidebar-configurations/set-up-acrolinx-for-single-sign-on)
+sign-on](https://docs.acrolinx.com/coreplatform/latest/en/security-and-identity/authentication/set-up-acrolinx-for-single-sign-on)
 for your Acrolinx Platform. You want to connect an integration like
 AEM or Wordpress to your Platform, but something went wrong. You need
 to troubleshoot the setup and use the Acrolinx Secure Tunnel for
