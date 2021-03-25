@@ -24,7 +24,7 @@ describe('test server', () => {
     expect(json).to.contain('core');
   });
 
-  it('test http', async () => {
+  it.skip('test http', async () => {
     await new SecureTunnel(config).testUrl(new URL('http://test.acrolinx.com:8031'), {secure: true});
   });
 
@@ -104,7 +104,7 @@ describe('http tunnel', () => {
     t.tunnel = new SecureTunnel(config);
   });
 
-  it('to http', async () => {
+  it.skip('to http', async () => {
     const result = await startTunnelAndFetch(t.tunnel!, 'http://localhost:' + randomPort(), 'http://test.acrolinx.com:8031', {secure: true});
     expect(result.status).to.be.eq(200);
     const json = await result.json();
@@ -210,7 +210,7 @@ describe('https tunnel', function() {
     }
   });
 
-  it('to http', async () => {
+  it.skip('to http', async () => {
     const port = randomPort();
     const data = await startSslTunnelAndGet(t.tunnel!, 'https://localhost:' + port,
       'http://test.acrolinx.com:8031', port, t.keys!, t.certificates!.certificate);
@@ -218,11 +218,19 @@ describe('https tunnel', function() {
     return true;
   });
 
-  it('to http fails if no certificate', async () => {
+  it('to https from https', async () => {
+    const port = randomPort();
+    const data = await startSslTunnelAndGet(t.tunnel!, 'https://localhost:' + port,
+      'https://test-ssl.acrolinx.com', port, t.keys!, t.certificates!.certificate);
+    expect(data).to.contain('core');
+    return true;
+  });
+
+  it('to https fails if no certificate', async () => {
     const port = randomPort();
     try {
       console.log(new Date().toISOString(), 'waiting...');
-      await startSslTunnelAndGet(t.tunnel!, 'https://localhost:' + port, 'http://test.acrolinx.com:8031', port, t.keys!, undefined);
+      await startSslTunnelAndGet(t.tunnel!, 'https://localhost:' + port, 'https://test-ssl.acrolinx.com', port, t.keys!, undefined);
       console.log(new Date().toISOString(), 'waiting finished');
     } catch (error) {
       console.log(new Date().toISOString(), 'error?');

@@ -29,6 +29,7 @@
     "markdown-to-html": "0.0.13",
     "mocha": "^5.2.0",
     "nexe": "^3.0.1",
+    "nyc": "^15.1.0",
     "pem": "^1.14.2",
     "replace": "^1.1.0",
     "report-viewer": "^0.3.3",

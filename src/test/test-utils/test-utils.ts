@@ -25,6 +25,6 @@ export async function startSimpleTunnelAndFetch(
   fetchOpts: RequestInit = {}
 ) {
   const localBaseUrl = 'http://localhost:' + randomPort();
-  tunnel.startTunnel(new URL(localBaseUrl), new URL('http://test.acrolinx.com:8031'), {secure: true});
+  tunnel.startTunnel(new URL(localBaseUrl), new URL('https://test-ssl.acrolinx.com'), {secure: true});
   return await fetch(localBaseUrl + path, fetchOpts);
 }
