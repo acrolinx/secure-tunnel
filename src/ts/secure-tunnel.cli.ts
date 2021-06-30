@@ -1,6 +1,6 @@
 /* Copyright (c) 2017-present Acrolinx GmbH */
 
-import * as program from 'commander';
+import { Command } from 'commander';
 import {URL} from 'url';
 import * as Registry from 'winreg';
 import {
@@ -84,29 +84,30 @@ export class Cli implements Config {
     const config = new Cli();
     const p = config.defineProgramUsage();
     const c = p.parse(argv);
+    const options = c.opts();
 
-    config.verbose = c.verbose;
-    config.silent = c.silent;
-    config.requests = c.requests;
-    config.secure = !!c.secure;
-    config.key = c.key;
-    config.passphrase = c.passphrase;
-    config.cert = c.cert;
-    config.store = c.store;
-    config.token = c.token;
-    config.infopage = c.infopage;
+    config.verbose = options.verbose;
+    config.silent = options.silent;
+    config.requests = options.requests;
+    config.secure = !!options.secure;
+    config.key = options.key;
+    config.passphrase = options.passphrase;
+    config.cert = options.cert;
+    config.store = options.store;
+    config.token = options.token;
+    config.infopage = options.infopage;
 
     config.tunnels = toTunnelMapping(c.args);
 
-    config.useSystemProxy = c.system_proxy;
-    config.useEvnironmentProxy = c.evnironment_proxy;
+    config.useSystemProxy = options.system_proxy;
+    config.useEvnironmentProxy = options.evnironment_proxy;
 
-    config.blockWithoutRequiredCookie = !!c[BLOCK_WITHOUT_REQUIRED_COOKIE_CLI_OPTION];
+    config.blockWithoutRequiredCookie = !!options[BLOCK_WITHOUT_REQUIRED_COOKIE_CLI_OPTION];
 
     try {
-      if (c.autorun) {
+      if (options.autorun) {
         if (!/^win/.test(process.platform)) {
-          if (!c.silent) {
+          if (!options.silent) {
             console.log(new Date().toISOString(), 'Autorun only supported on windows.');
           }
           throw new Error('Autorun only supported on windows.');
@@ -123,15 +124,15 @@ export class Cli implements Config {
     }
     try {
 
-      config.sso = config.getSsoConfig(c.sso);
+      config.sso = config.getSsoConfig(options.sso);
     } catch (e) {
       console.error(new Date().toISOString(), 'Failed to set SSO config: ' + e);
     }
-    if (c.info_url) {
+    if (options.info_url) {
       try {
-        config.infoUrl = new URL(c.info_url);
+        config.infoUrl = new URL(options.info_url);
       } catch (e) {
-        console.error(new Date().toISOString(), 'Failed to set info URL: ' + c.info_url + ' - ' + e);
+        console.error(new Date().toISOString(), 'Failed to set info URL: ' + options.info_url + ' - ' + e);
       }
     }
     config.proxyUrl = await config.getProxyUrl(argv, env, c);
@@ -218,7 +219,7 @@ export class Cli implements Config {
   }
 
   private defineProgramUsage() {
-    return program
+    return new Command()
       .description('Acrolinx Secure Tunnel')
       .version('INTERNAL')
       .usage('[options] <local-URL->server-URL ...>')
