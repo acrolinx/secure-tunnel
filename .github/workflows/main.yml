@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -28,6 +28,20 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
+      - run: |
+          npm ci
+          npm run test
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+   
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build and compile secure tunnel
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
       - run: |
           npm ci
           npm run release
