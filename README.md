@@ -1,6 +1,6 @@
 # Acrolinx Secure Tunnel
 
-[![Build Status](https://travis-ci.org/acrolinx/secure-tunnel.svg?branch=master)](https://travis-ci.org/acrolinx/secure-tunnel)
+[![Build Status](https://github.com/acrolinx/secure-tunnel/actions/workflows/main.yml/badge.svg)](https://github.com/acrolinx/secure-tunnel/actions)
 
 ## Introduction
 
