@@ -1,7 +1,7 @@
 {
   "name": "acrolinx-secure-tunnel",
   "description": "Acrolinx Secure Tunnel",
-  "version": "1.1.17",
+  "version": "1.1.18",
   "license": "",
   "private": true,
   "main": "dist/ts/secure-tunnel.js",
