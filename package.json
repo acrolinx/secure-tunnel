@@ -8,7 +8,7 @@
   "devDependencies": {
     "@lib/autodts-generator": "~0.0.1",
     "@types/chai": "^4.1.7",
-    "@types/chai-http": "^3.0.5",
+    "@types/chai-http": "^4.2.0",
     "@types/chai-string": "^1.4.1",
     "@types/http-proxy": "^1.17.0",
     "@types/isomorphic-fetch": "0.0.34",
@@ -20,7 +20,7 @@
     "@types/winreg": "^1.2.30",
     "autodts": "0.0.6",
     "chai": "^4.2.0",
-    "chai-http": "^4.2.0",
+    "chai-http": "^4.4.0",
     "chai-string": "^1.5.0",
     "cross-var": "^1.1.0",
     "exports-loader": "^0.7.0",
