@@ -10,7 +10,7 @@
     "@types/chai": "^4.1.7",
     "@types/chai-http": "^3.0.5",
     "@types/chai-string": "^1.4.1",
-    "@types/http-proxy": "^1.17.0",
+    "@types/http-proxy": "^1.17.11",
     "@types/isomorphic-fetch": "0.0.34",
     "@types/lodash": "^4.14.123",
     "@types/mocha": "^5.2.6",
