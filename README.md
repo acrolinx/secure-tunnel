@@ -148,7 +148,7 @@ handle the SSL termination.
 1. Start the HTTP to HTTPS tunnel:
 
     ```bash
-    secure-tunnel "http://localhost:8031->https://test-ssl.acrolinx.com" -t ca.pem
+    secure-tunnel "http://localhost:8031->https://partner-dev.internal.acrolinx.sh" -t ca.pem
     ```
 
 2. Connect your integration to `http://localhost:8031`.
@@ -166,7 +166,7 @@ upgrade.
 1. Start the HTTP to HTTPS tunnel:
 
     ```bash
-    secure-tunnel "http://localhost:8031->https://test-ssl.acrolinx.com"
+    secure-tunnel "http://localhost:8031->https://partner-dev.internal.acrolinx.sh"
     ```
 
 2. Connect your integration to `http://localhost:8031`.
@@ -208,7 +208,7 @@ through the proxy.
 1. Let `secure-tunnel` start an HTTP to HTTPS tunnel:
 
 ```bash
-secure-tunnel "http://localhost:8031->https://test-ssl.acrolinx.com" -p "http://proxy:3128"
+secure-tunnel "http://localhost:8031->https://partner-dev.internal.acrolinx.sh" -p "http://proxy:3128"
 ```
 
 Connect your integration to `http://localhost:8031`.
@@ -238,7 +238,7 @@ supports:
 _Note:_ Windows only
 
 ```bash
-secure-tunnel "http://localhost:8031->https://test-ssl.acrolinx.com"
+secure-tunnel "http://localhost:8031->https://partner-dev.internal.acrolinx.sh"
 ```
 
 _Unless `-S` is specified, the system default proxy will be taken automatically._
@@ -328,7 +328,7 @@ debugging.
 1. Set up an SSO-proxy on your local computer:
 
    ```bash
-   secure-tunnel "http://localhost:8031->https://test-ssl.acrolinx.com" --sso some_existing_username:generic_token
+   secure-tunnel "http://localhost:8031->https://partner-dev.internal.acrolinx.sh" --sso some_existing_username:generic_token
    ```
 
    This emulates the proxy inside the web server.
