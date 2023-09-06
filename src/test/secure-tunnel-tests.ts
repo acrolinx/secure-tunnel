@@ -18,7 +18,7 @@ import {randomPort, startTunnelAndFetch} from './test-utils/test-utils';
 chai.use(chaiString);
 describe('test server', () => {
   it('is online at all', async () => {
-    const result = await fetch('https://test-ssl.acrolinx.com/iq/services/rest/registry/knownServiceNames');
+    const result = await fetch('https://partner-dev.internal.acrolinx.sh/iq/services/rest/registry/knownServiceNames');
     expect(result.status).to.be.eq(200);
     const json = await result.json();
     expect(json).to.contain('core');
@@ -29,13 +29,13 @@ describe('test server', () => {
   });
 
   it('test https', async () => {
-    await new SecureTunnel(config).testUrl(new URL('https://test-ssl.acrolinx.com'), {secure: true});
+    await new SecureTunnel(config).testUrl(new URL('https://partner-dev.internal.acrolinx.sh'), {secure: true});
   });
 
   it('test https without certificate fails', async () => {
     const tmpFile = tmp.fileSync({});
     try {
-      await new SecureTunnel(config).testUrl(new URL('https://test-ssl.acrolinx.com'), {
+      await new SecureTunnel(config).testUrl(new URL('https://partner-dev.internal.acrolinx.sh'), {
         secure: true,
         ca: [tmpFile.name]
       });
@@ -113,7 +113,7 @@ describe('http tunnel', () => {
   });
 
   it('to https', async () => {
-    const result = await startTunnelAndFetch(t.tunnel!, 'http://localhost:' + randomPort(), 'https://test-ssl.acrolinx.com', {secure: true});
+    const result = await startTunnelAndFetch(t.tunnel!, 'http://localhost:' + randomPort(), 'https://partner-dev.internal.acrolinx.sh', {secure: true});
     expect(result.status).to.be.eq(200);
     const json = await result.json();
     expect(json).to.contain('core');
@@ -122,7 +122,7 @@ describe('http tunnel', () => {
 
   it('to https post', async () => {
     const localUrl = 'http://localhost:' + randomPort();
-    t.tunnel!.startTunnel(new URL(localUrl), new URL('https://test-ssl.acrolinx.com'), {secure: true}, undefined, undefined, undefined);
+    t.tunnel!.startTunnel(new URL(localUrl), new URL('https://partner-dev.internal.acrolinx.sh'), {secure: true}, undefined, undefined, undefined);
     const result = await fetch(localUrl + '/iq/services/v4/rest/core/requestSession', {
       method: 'post',
       headers: {'Content-Type': 'application/json', 'authToken': 'foo'},
@@ -221,7 +221,7 @@ describe('https tunnel', function() {
   it('to https from https', async () => {
     const port = randomPort();
     const data = await startSslTunnelAndGet(t.tunnel!, 'https://localhost:' + port,
-      'https://test-ssl.acrolinx.com', port, t.keys!, t.certificates!.certificate);
+      'https://partner-dev.internal.acrolinx.sh', port, t.keys!, t.certificates!.certificate);
     expect(data).to.contain('core');
     return true;
   });
@@ -230,7 +230,7 @@ describe('https tunnel', function() {
     const port = randomPort();
     try {
       console.log(new Date().toISOString(), 'waiting...');
-      await startSslTunnelAndGet(t.tunnel!, 'https://localhost:' + port, 'https://test-ssl.acrolinx.com', port, t.keys!, undefined);
+      await startSslTunnelAndGet(t.tunnel!, 'https://localhost:' + port, 'https://partner-dev.internal.acrolinx.sh', port, t.keys!, undefined);
       console.log(new Date().toISOString(), 'waiting finished');
     } catch (error) {
       console.log(new Date().toISOString(), 'error?');
@@ -246,7 +246,7 @@ describe('https tunnel', function() {
   it('to https', async () => {
     const port = randomPort();
     const data = await startSslTunnelAndGet(t.tunnel!, 'https://localhost:' + port,
-      'https://test-ssl.acrolinx.com', port, t.keys!, t.certificates!.certificate);
+      'https://partner-dev.internal.acrolinx.sh', port, t.keys!, t.certificates!.certificate);
     expect(data).to.contain('core');
     return true;
   });
@@ -254,7 +254,7 @@ describe('https tunnel', function() {
   it('to https fails if no certificate', async () => {
     const port = randomPort();
     try {
-      await startSslTunnelAndGet(t.tunnel!, 'https://localhost:' + port, 'https://test-ssl.acrolinx.com', port, t.keys!, undefined);
+      await startSslTunnelAndGet(t.tunnel!, 'https://localhost:' + port, 'https://partner-dev.internal.acrolinx.sh', port, t.keys!, undefined);
     } catch (error) {
       if ('DEPTH_ZERO_SELF_SIGNED_CERT' === error.code) {
         return true;
