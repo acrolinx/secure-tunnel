@@ -12,7 +12,7 @@
     "@types/chai-string": "^1.4.1",
     "@types/http-proxy": "^1.17.12",
     "@types/isomorphic-fetch": "0.0.34",
-    "@types/lodash": "^4.14.123",
+    "@types/lodash": "^4.14.198",
     "@types/mocha": "^5.2.6",
     "@types/open": "^6.0.0",
     "@types/pem": "^1.9.5",
