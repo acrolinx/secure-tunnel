@@ -70,7 +70,7 @@
     "http-proxy": "^1.18.1",
     "lodash": "^4.17.21",
     "open": "^8.2.1",
-    "proxy-agent": "^4.0.1",
+    "proxy-agent": "^6.4.0",
     "ts-node": "^10.9.2",
     "winreg": "^1.2.5"
   }
