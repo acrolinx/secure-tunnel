@@ -2,17 +2,14 @@
 name: CI Secure Tunnel
 
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [ main ]
     tags:
       - 'v*'
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
   schedule:
-  - cron: "0 2 * * *"
-
-  # Allows you to run this workflow manually from the Actions tab
+    - cron: "0 2 * * *"
   workflow_dispatch:
 
 jobs:
