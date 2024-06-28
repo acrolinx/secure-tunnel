@@ -28,7 +28,7 @@
     "isomorphic-fetch": "^3.0.0",
     "marked": "^2.1.3",
     "mocha": "^9.2.2",
-    "mochawesome": "^6.2.2",
+    "mochawesome": "^7.1.3",
     "nexe": "^4.0.0-beta.18",
     "nyc": "^17.0.0",
     "pem": "^1.14.2",
