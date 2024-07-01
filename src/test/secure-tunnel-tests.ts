@@ -24,10 +24,6 @@ describe('test server', () => {
     expect(json).to.contain('core');
   });
 
-  it.skip('test http', async () => {
-    await new SecureTunnel(config).testUrl(new URL('http://test.acrolinx.com:8031'), {secure: true});
-  });
-
   it('test https', async () => {
     await new SecureTunnel(config).testUrl(new URL('https://partner-dev.internal.acrolinx.sh'), {secure: true});
   });
@@ -102,14 +98,6 @@ describe('http tunnel', () => {
 
   beforeEach(() => {
     t.tunnel = new SecureTunnel(config);
-  });
-
-  it.skip('to http', async () => {
-    const result = await startTunnelAndFetch(t.tunnel!, 'http://localhost:' + randomPort(), 'http://test.acrolinx.com:8031', {secure: true});
-    expect(result.status).to.be.eq(200);
-    const json = await result.json();
-    expect(json).to.contain('core');
-    return true;
   });
 
   it('to https', async () => {
@@ -210,14 +198,6 @@ describe('https tunnel', function() {
     }
   });
 
-  it.skip('to http', async () => {
-    const port = randomPort();
-    const data = await startSslTunnelAndGet(t.tunnel!, 'https://localhost:' + port,
-      'http://test.acrolinx.com:8031', port, t.keys!, t.certificates!.certificate);
-    expect(data).to.contain('core');
-    return true;
-  });
-
   it('to https from https', async () => {
     const port = randomPort();
     const data = await startSslTunnelAndGet(t.tunnel!, 'https://localhost:' + port,
@@ -225,6 +205,10 @@ describe('https tunnel', function() {
     expect(data).to.contain('core');
     return true;
   });
+
+  function isError(error: any): error is NodeJS.ErrnoException {
+    return error instanceof Error;
+  }
 
   it('to https fails if no certificate', async () => {
     const port = randomPort();
@@ -234,7 +218,7 @@ describe('https tunnel', function() {
       console.log(new Date().toISOString(), 'waiting finished');
     } catch (error) {
       console.log(new Date().toISOString(), 'error?');
-      if ('DEPTH_ZERO_SELF_SIGNED_CERT' === error.code) {
+      if (isError(error) && 'DEPTH_ZERO_SELF_SIGNED_CERT' === error.code) {
         return true;
       }
       fail('Unexpected error: ' + error);
@@ -256,7 +240,7 @@ describe('https tunnel', function() {
     try {
       await startSslTunnelAndGet(t.tunnel!, 'https://localhost:' + port, 'https://partner-dev.internal.acrolinx.sh', port, t.keys!, undefined);
     } catch (error) {
-      if ('DEPTH_ZERO_SELF_SIGNED_CERT' === error.code) {
+      if (isError(error) && 'DEPTH_ZERO_SELF_SIGNED_CERT' === error.code) {
         return true;
       }
       fail('Unexpected error: ' + error);
