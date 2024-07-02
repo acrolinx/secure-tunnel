@@ -70,7 +70,7 @@
     "getpass": "^0.1.7",
     "http-proxy": "^1.18.1",
     "lodash": "^4.17.21",
-    "open": "^8.4.2",
+    "open": "^10.1.0",
     "proxy-agent": "^6.4.0",
     "ts-node": "^10.9.2",
     "winreg": "^1.2.5"
