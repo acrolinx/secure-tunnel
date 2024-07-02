@@ -12,14 +12,13 @@ import { SecureTunnelConfig, SslConfig, SsoConfig, Tunnel } from './secure-tunne
 import * as urlTester from './url-tester';
 import { hash } from './util';
 
-// tslint:disable-next-line variable-name no-var-requires
 const ProxyAgent = require('proxy-agent');
 
 export { SecureTunnelConfig, SslConfig };
 
 export class SecureTunnel {
   private config: SecureTunnelConfig;
-  private servers: Array<http.Server | https.Server> = [];
+  private servers: (http.Server | https.Server)[] = [];
 
   constructor(config: SecureTunnelConfig) {
     this.config = config;
@@ -266,7 +265,7 @@ export class SecureTunnel {
   private fixBadCookies(proxyRes: http.IncomingMessage) {
     if (proxyRes.headers['set-cookie']) {
       const replaceStrangeChars = (text: string) => text.replace(/[\u0000-\u0031\u0127]/, '_');
-      proxyRes.headers['set-cookie'] = (proxyRes.headers['set-cookie'] as string[]).map(h => replaceStrangeChars(h));
+      proxyRes.headers['set-cookie'] = (proxyRes.headers['set-cookie']).map(h => replaceStrangeChars(h));
     }
   }
 }

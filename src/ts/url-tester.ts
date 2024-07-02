@@ -6,7 +6,6 @@ import * as _ from 'lodash';
 import {URL} from 'url';
 import {SecureTunnelConfig, SslConfig} from './secure-tunnel.net';
 
-// tslint:disable-next-line variable-name no-var-requires
 const ProxyAgent = require('proxy-agent');
 
 export function testUrl(label: string, url: URL, config: SecureTunnelConfig, sslConfig: SslConfig, proxyUri?: URL) {

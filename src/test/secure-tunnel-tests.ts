@@ -54,7 +54,7 @@ const config: SecureTunnelConfig = {
 
 
 const startSslTunnelAndGet = async (tunnel: SecureTunnel, localUrl: string, remoteUrl: string, port: number, sslConfig: SslConfig, certificate?: string) => {
-  tunnel!.startTunnel(new URL(localUrl), new URL(remoteUrl), sslConfig, undefined, undefined, undefined);
+  tunnel.startTunnel(new URL(localUrl), new URL(remoteUrl), sslConfig, undefined, undefined, undefined);
   const data = await new Promise((resolve, reject) => {
     try {
       https.get({
@@ -184,8 +184,8 @@ describe('https tunnel', function() {
         cert: createTmpFile(),
         secure: true
       };
-      fs.writeFileSync(t.keys!.key!, certificates.clientKey);
-      fs.writeFileSync(t.keys!.cert!, certificates.certificate);
+      fs.writeFileSync(t.keys.key!, certificates.clientKey);
+      fs.writeFileSync(t.keys.cert!, certificates.certificate);
     }
   });
   afterEach(() => {

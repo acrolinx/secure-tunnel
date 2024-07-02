@@ -36,7 +36,7 @@ const toTunnelMapping: (args: string[]) => Tunnel[] = args => {
   });
 
   const validTunnels = tunnels.filter(tunnel => tunnel !== undefined);
-  return validTunnels as Tunnel[];
+  return validTunnels;
 };
 
 async function getRegKey(

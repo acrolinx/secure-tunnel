@@ -10,8 +10,6 @@ import { SecureTunnel, SslConfig } from './secure-tunnel.net';
 import { hashJson } from './util';
 
 
-// tslint:disable no-floating-promises
-
 async function start(p: NodeJS.Process) {
   const config: Config = await Cli.parse(p.argv, p.env);
   const tunnel = new SecureTunnel({ ...config });
