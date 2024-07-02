@@ -2,7 +2,7 @@
 
 import * as fs from 'fs';
 import * as _ from 'lodash';
-import opn = require('open');
+import { openApp } from 'open'
 import { URL } from 'url';
 import { Cli } from './secure-tunnel.cli';
 import { Config } from './secure-tunnel.def';
@@ -73,7 +73,7 @@ async function start(p: NodeJS.Process) {
   });
 
   if (!config.silent && config.infoUrl) {
-    opn(config.infoUrl.toString());
+    openApp(config.infoUrl.toString());
   }
 }
 
