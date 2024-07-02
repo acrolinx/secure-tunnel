@@ -2,7 +2,7 @@
 
 import * as fs from 'fs';
 import * as _ from 'lodash';
-import { openApp } from 'open'
+import open from 'open'
 import { URL } from 'url';
 import { Cli } from './secure-tunnel.cli';
 import { Config } from './secure-tunnel.def';
