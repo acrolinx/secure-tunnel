@@ -73,7 +73,7 @@ async function start(p: NodeJS.Process) {
   });
 
   if (!config.silent && config.infoUrl) {
-    openApp(config.infoUrl.toString());
+    open(config.infoUrl.toString());
   }
 }
 
