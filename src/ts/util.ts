@@ -2,7 +2,6 @@
 
 import {URL} from 'url';
 
-// tslint:disable-next-line no-var-requires
 const crypto = require('crypto');
 
 export function hash(...urls: Array<URL | undefined>): string {
