@@ -4,7 +4,7 @@ import {URL} from 'url';
 
 const crypto = require('crypto');
 
-export function hash(...urls: (URL | undefined)[]): string {
+export function hash(...urls: Array<URL | undefined>): string {
   const text = urls.map(u => u ? '' + u : '').join('');
   return hashString(text);
 }
