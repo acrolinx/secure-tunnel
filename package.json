@@ -6,7 +6,7 @@
   "private": true,
   "main": "dist/ts/secure-tunnel.js",
   "devDependencies": {
-    "@lib/autodts-generator": "~0.0.1",
+    "@lib/autodts-generator": "^0.0.2",
     "@types/chai": "^4.1.7",
     "@types/chai-http": "^4.2.0",
     "@types/chai-string": "^1.4.5",
