@@ -21,3 +21,4 @@ mochawesome-report
 
 # Eclipse
 .project
+.settings
