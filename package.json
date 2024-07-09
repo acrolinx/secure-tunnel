@@ -20,7 +20,7 @@
     "@types/tmp": "^0.0.34",
     "@types/winreg": "^1.2.36",
     "@typescript-eslint/eslint-plugin": "^7.15.0",
-    "@typescript-eslint/parser": "^7.15.0",
+    "@typescript-eslint/parser": "^7.16.0",
     "autodts": "^0.0.6",
     "chai": "^4.4.1",
     "chai-http": "^5.0.0",
