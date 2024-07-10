@@ -17,7 +17,7 @@
     "@types/node": "^20.14.10",
     "@types/open": "^6.0.0",
     "@types/pem": "^1.9.5",
-    "@types/tmp": "^0.0.34",
+    "@types/tmp": "^0.2.6",
     "@types/winreg": "^1.2.36",
     "@typescript-eslint/eslint-plugin": "^7.16.0",
     "@typescript-eslint/parser": "^7.16.0",
