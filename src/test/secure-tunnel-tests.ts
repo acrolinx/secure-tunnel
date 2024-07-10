@@ -149,7 +149,7 @@ describe('https tunnel', function() {
   const t: {
     tunnel?: SecureTunnel,
     keys?: SslConfig,
-    files: tmp.SynchrounousResult[],
+    files: tmp.FileResult[],
     certificates: CertificateCreationResult | undefined
   } = {
     tunnel: undefined,
