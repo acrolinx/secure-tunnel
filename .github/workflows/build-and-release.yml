@@ -1,4 +1,3 @@
-
 name: CI Secure Tunnel
 
 on:
@@ -20,7 +19,8 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Test secure tunnel
         uses: actions/setup-node@v4
@@ -35,9 +35,10 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
-   
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Build and compile secure tunnel
         uses: actions/setup-node@v4
@@ -47,8 +48,8 @@ jobs:
       - run: |
           npm ci
           npm run release
-      
-      - name: Archive artifacts 
+
+      - name: Archive artifacts
         uses: actions/upload-artifact@v4
         with:
           name: secure-tunnel-artifacts
