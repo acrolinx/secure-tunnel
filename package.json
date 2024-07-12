@@ -5,6 +5,9 @@
   "license": "",
   "private": true,
   "main": "dist/ts/secure-tunnel.js",
+  "engines": {
+    "node": ">=20"
+  },
   "devDependencies": {
     "@lib/autodts-generator": "^0.0.2",
     "@types/chai": "^4.1.7",
