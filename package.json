@@ -62,7 +62,7 @@
     "predebugWithParams": "npm run precompile",
     "debugWithParams": "node --nolazy --inspect=9230 --debug-brk dist/ts/secure-tunnel.js \"http://localhost:8031->https://partner-dev.internal.acrolinx.sh\" -v -r -I",
     "doc": "node node_modules/marked/bin/marked README.md > README.html",
-    "setversion": "cross-var node node_modules/replace/bin/replace.js \"\\.version\\('.+?'\\)\" \".version('$npm_package_version.$TRAVIS_BUILD_NUMBER')\" src/ts/secure-tunnel.cli.ts",
+    "setversion": "cross-var node node_modules/replace/bin/replace.js \"\\.version\\('.+?'\\)\" \".version('$BUILD_NUMBER')\" src/ts/secure-tunnel.cli.ts",
     "prerelease": "npm run setversion && npm run compile",
     "release": "npm run doc",
     "pretest": "npm run build",
