@@ -15,7 +15,7 @@
     "@types/chai-string": "^1.4.5",
     "@types/http-proxy": "^1.17.12",
     "@types/isomorphic-fetch": "^0.0.39",
-    "@types/lodash": "^4.14.123",
+    "@types/lodash": "^4.17.7",
     "@types/mocha": "^10.0.7",
     "@types/node": "^20.14.10",
     "@types/open": "^6.0.0",
