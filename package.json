@@ -45,7 +45,7 @@
     "rimraf": "^6.0.1",
     "tmp": "^0.2.3",
     "ts-loader": "^9.5.1",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.4"
   },
   "scripts": {
     "clean": "rimraf dist bin",
