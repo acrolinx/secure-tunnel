@@ -33,7 +33,7 @@
     "eslint-plugin-jsdoc": "^48.8.3",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "exports-loader": "^5.0.0",
-    "got": "^14.4.1",
+    "got": "^14.4.2",
     "isomorphic-fetch": "^3.0.0",
     "marked": "^13.0.1",
     "mocha": "^10.7.0",
