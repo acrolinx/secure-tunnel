@@ -25,7 +25,7 @@
     "@typescript-eslint/eslint-plugin": "^7.17.0",
     "@typescript-eslint/parser": "^7.17.0",
     "autodts": "^0.0.6",
-    "chai": "^4.4.1",
+    "chai": "^4.5.0",
     "chai-http": "^5.0.0",
     "chai-string": "^1.5.0",
     "cross-var": "^1.1.0",
