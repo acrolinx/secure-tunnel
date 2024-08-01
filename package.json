@@ -17,7 +17,7 @@
     "@types/isomorphic-fetch": "^0.0.39",
     "@types/lodash": "^4.17.7",
     "@types/mocha": "^10.0.7",
-    "@types/node": "^22.0.0",
+    "@types/node": "^22.0.2",
     "@types/open": "^6.0.0",
     "@types/pem": "^1.9.5",
     "@types/tmp": "^0.2.6",
