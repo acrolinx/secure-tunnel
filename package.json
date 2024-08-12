@@ -34,7 +34,7 @@
     "got": "^14.4.2",
     "isomorphic-fetch": "^3.0.0",
     "marked": "^14.0.0",
-    "mocha": "^10.7.0",
+    "mocha": "^10.7.3",
     "mochawesome": "^7.1.3",
     "nexe": "^4.0.0-rc.6",
     "nyc": "^17.0.0",
