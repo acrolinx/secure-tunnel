@@ -9,7 +9,7 @@
     "node": ">=20"
   },
   "devDependencies": {
-    "@eslint/js": "^9.8.0",
+    "@eslint/js": "^9.9.0",
     "@lib/autodts-generator": "^0.0.2",
     "@types/chai": "^4.1.7",
     "@types/chai-http": "^4.2.0",
